@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body,
+        html {
+            height: 100%;
+            background-color: #f7f9fc;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: #0662CD;
+            color: white;
+            padding: 20px;
+            width: 18%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        #sidebar-menu {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .sidebar .menu {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar .menu a {
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+        }
+
+        ion-icon {
+            font-size: 20px;
+        }
+
+        .link {
+            display: flex;
+            gap: 15px;
+        }
+
+        .help {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .content-container {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Profile Container Styling */
+        .profile-container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo-container {
+            position: relative;
+        }
+
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0662CD;
+        }
+
+        .edit-photo {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #0662CD;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .change-photo {
+            background-color: #0662CD;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Form Styling */
+        .profile-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #0662CD;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Save Button */
+        .save-button {
+            background-color: #0662CD;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            align-self: center;
+            width: 100%;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .save-button:hover {
+            background-color: #0550a5;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 10px;
+                align-items: center;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            #sidebar-menu {
+                display: none;
+            }
+
+            .sidebar.show #sidebar-menu {
+                display: flex;
+            }
+
+            .content-container {
+                padding: 10px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="/img/Pystay Housing Logo white.png" style="width:100px" alt="">
+                </div>
+                <div class="hamburger">
+                    <ion-icon name="menu-outline" id="menu-icon"></ion-icon>
+                </div>
+            </div>
+            <div class="menu" id="sidebar-menu">
+                <div class="link">
+                    <ion-icon name="apps-outline"></ion-icon>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <a href="properties.html">Properties</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <a href="bookings.html">Bookings</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="star-outline"></ion-icon>
+                    <a href="reviews.html">Reviews</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                    <a href="profile.html">Profile</a>
+                </div>
+                <div class="help">
+                    <div class="link">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        <a href="">Settings</a>
+                    </div>
+                    <div class="link">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        <a href="/index.html">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Container -->
+        <div class="content-container">
+            <!-- Profile Management Section -->
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-photo-container">
+                        <img src="/img/profile1.jpg" alt="Profile Photo" class="profile-photo">
+                        <button class="edit-photo">
+                            <ion-icon name="pencil-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <h2>Jane Smith</h2>
+                    <button class="change-photo">Change Photo</button>
+                </div>
+                <form class="profile-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Jane Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="janesmith123">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="jane.smith@example.com">
+                    </div>
+                    <button type="submit" class="save-button">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('menu-icon').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('show');
+        });
+    </script>
+</body>
+
+</html>
+

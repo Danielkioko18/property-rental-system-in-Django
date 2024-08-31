@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties</title>
+    <link rel="stylesheet" href="properties.css">
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="/img/Pystay Housing Logo white.png" style="width:100px" alt="">
+                </div>
+                <div class="hamburger">
+                    <ion-icon name="menu-outline" id="menu-icon"></ion-icon>
+                </div>
+            </div>
+            <div class="menu" id="sidebar-menu">
+                <div class="link">
+                    <ion-icon name="apps-outline"></ion-icon>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <a href="properties.html">Properties</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <a href="bookings.html">Bookings</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="cash-outline"></ion-icon>
+                    <a href="reviews.html">Reviews</a>
+                </div>
+                <div class="link">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                    <a href="profile.html">Profile</a>
+                </div>
+                <div class="help">
+                    <div class="link">
+                        <ion-icon name="settings-outline"></ion-icon>
+                        <a href="">Settings</a>
+                    </div>
+                    <div class="link">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        <a href="">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="search">
+                <div class="user-info">
+                    <p class="username">Crystal</p>
+                    <div class="prof">
+                        <img src="/img/profile1.jpg" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
+                    </div>
+                    <div class="icon">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="header">
+                <button class="filter-button" style="margin-right: 20px;">Filter by Category</button>
+                <button class="add-button"> Add a product</button>
+            </div>
+            <div class="filter-list hidden" id="filter-list">
+                <ul>
+                    <li>Location</li>
+                    <li>Price Range</li>
+                    <li>Bedrooms</li>
+                    <li>Square Footage</li>
+                    <li>Amenities</li>
+                </ul>
+            </div>
+
+            <!-- Modal for Adding Product -->
+            <div class="modal hidden" id="add-modal">
+                <div class="modal-content">
+                    <span class="close-button" id="close-modal">&times;</span>
+                    <h2>Add a Property</h2>
+                    <form id="add-property-form">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" required>
+
+                        <label for="price">Price:</label>
+                        <input type="text" id="price" name="price" required>
+
+                        <label for="bedrooms">Bedrooms:</label>
+                        <input type="number" id="bedrooms" name="bedrooms" required>
+
+                        <label for="square-footage">Square Footage:</label>
+                        <input type="text" id="square-footage" name="square-footage" required>
+
+                        <label for="amenities">Amenities:</label>
+                        <input type="text" id="amenities" name="amenities" required>
+
+                        <label for="images">Images or Videos:</label>
+                        <input type="file" id="media" name="media" multiple required>
+
+                        <button type="submit">Add Property</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="properties-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Main Image</th>
+                            <th>Location</th>
+                            <th>Price</th>
+                            <th>Bedrooms</th>
+                            <th>Square Footage</th>
+                            <th>Amenities</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Property rows will be populated here -->
+                        <tr>
+                            <td>1</td>
+                            <td><img src="/img/building 3.jpg" alt="Property Image" class="property-image"></td>
+                            <td>Ruaka, Kiambu</td>
+                            <td>$500,000</td>
+                            <td>3</td>
+                            <td>1200 sqft</td>
+                            <td>Pool, gym, parking</td>
+                            <td>
+                                <ion-icon name="eye-outline" class="view-button"></ion-icon>
+                                <ion-icon name="create-outline" class="edit-button"></ion-icon>
+                                <ion-icon name="trash-outline" class="delete-button"></ion-icon>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><img src="/img/building 2.jpg" alt="Property Image" class="property-image"></td>
+                            <td>Karen,Nairobi </td>
+                            <td>$500,000</td>
+                            <td>3</td>
+                            <td>1200 sqft</td>
+                            <td>Modern kitchen, ample parking, spacious lounge</td>
+                            <td>
+                                <ion-icon name="eye-outline" class="view-button"></ion-icon>
+                                <ion-icon name="create-outline" class="edit-button"></ion-icon>
+                                <ion-icon name="trash-outline" class="delete-button"></ion-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Pagination Controls -->
+                <div class="pagination">
+                    <button class="prev-button">Previous</button>
+                    <button class="next-button">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    document.getElementById('menu-icon').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('show');
+    });
+    </script>
+    <script src="properties.js"></script>
+</body>
+</html>

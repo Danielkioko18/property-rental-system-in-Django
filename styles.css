@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+    width:100%;
+    overflow-x: hidden;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.hero{
+    width:100%;
+    height:70vh;
+    background-image: url("/img/building\ 2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    image-rendering: optimizeQuality!important;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.hero h1{
+    font-size: 2.5rem;
+    letter-spacing: 2.5px;
+    z-index: 2;
+    color: white;
+}
+.hero-content {
+    z-index: 2; 
+    padding: 20px;
+}
+.hero::after{
+    content: "";
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:70vh;
+    margin-top: 70px;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1;
+    
+}
+.navbar{
+    color:white;
+    background-color: #0662CD;
+    height:70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+}
+.links {
+    text-decoration: none;
+    display: flex;
+    gap:20px;
+    margin-right: 50px;
+    margin-left: 30px;
+}
+.link li{
+    list-style: none;
+}
+.logo{
+    margin-left: 50px;
+}
+.right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:25px;
+    margin-right: 50px;
+}
+.btn{
+    padding: 10px 20px;
+    border-radius:30px;
+    cursor: pointer;
+    border: none;
+}
+.start{
+    color:white;
+    background-color: #111;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%; 
+    position: absolute;
+    top: 70vh; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000; 
+    height: auto; 
+}
+
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-field label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.search-field select, .search-field input[type="range"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#price-label {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color:#0662CD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #e04e4c;
+}
+.properties{
+    margin-top: 100px;
+}
+.properties h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.featured{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.card {
+    position: relative;
+    width: 300px;
+    height: 410px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden; 
+}
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: background-color 0.3s ease;
+}
+
+.love-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: #e04e4c;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+}
+
+.card:hover .love-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card:hover img {
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: brightness(70%);
+}
+.card-content{
+    padding:20px;
+}
+/* For the details button */
+.det {
+    margin-top: 15px;
+    border: 1px solid #0662CD;
+}
+
+.det:hover {
+    background-color: #0662CD;
+    color: white;
+}
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin: 0 auto;
+    margin-top: 120px;
+    max-width: 80%;
+    
+}
+.aboutUs{
+    width:50%;
+}
+.aboutUs h2{
+    margin-bottom: 30px;
+    color:#0662CD;
+}
+.img{
+    width:50%;
+    height:400px;   
+}
+.img img{
+    width:100%;
+    height:100%;
+}
+.help-section {
+    text-align: center;
+    padding: 50px 0;
+    width:80%;
+    margin: 0 auto;
+    margin-top: 70px;
+}
+
+.help-section h2 {
+    margin-bottom: 40px;
+
+}
+
+.help {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.help-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.help-icon {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.help-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #0662CD;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, #34d2e0, #6db3f2);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 70px;
+}
+
+.cta-section h2 {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.cta-section p {
+    color: #e7f7fc;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.cta-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cta-form input[type="email"] {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    width: 60%;
+    max-width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cta-form button {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    background-color: #283048;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-form button:hover {
+    background-color: #16213e;
+}
+.card-content .rating {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 10px;
+}
+
+.rating i {
+    color: #f5c518; 
+}
+
+.card-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #0662CD;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
