@@ -1,90 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</head>
-<body>
-    <div class="main">
-        <nav class="navbar">
-            <div class="logo">
-                <img src="img/Pystay Housing Logo white.png" style="width:100px" alt="">
-            </div>
-            <div class="right">
-                <div class="links">
-                        <a href="">Home</a>
-                        <a href="">About</a>
-                        <a href="listings.html">Property Listings</a>
-                        <a href="">Contact</a>
-                </div>
-                <div class="started">
-                    <button class="btn">Log in</button>
-                    <a href="/Landlords/dashboard.html"><button class="btn start">Get Started</button></a>
-                </div>
-            </div>
 
-        </nav>
-        <div class="hero">
-            <div class="hero-content">
-                <h1>Transforming the rental experience with <br>innovation and transparency.</h1>
-            </div>
-            <div class="search">
-                
-            </div>
-        </div>
-        <div class="search-bar">
-            <div class="search-field">
-                <label for="location">Location:</label>
-                <select id="location">
-                    <option value="">Select Location</option>
-                    <option value="california">Nairobi, Kenya</option>
-                    <option value="new-york">Kiambu, Ruiru</option>
-                </select>
-            </div>
-                       
-            <div class="search-field">
-                <label for="property-type">Property Type:</label>
-                <select id="property-type">
-                    <option value="">Select Type</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="house">House</option>
-                    <option value="studio">Studio</option>
-                </select>
-            </div>
-
-            <div class="search-field">
-                <label for="location">Amenities:</label>
-                <select id="location">
-                    <option value="">Select Amenities</option>
-                    <option value="california">Pet friendly</option>
-                    <option value="new-york">Parking</option>
-                    <option value="new-york">Gym</option>
-                </select>
-            </div>
-            
-            <div class="search-field">
-                <label for="price-range">Price Range:</label>
-                <input type="range" id="price-range" min="10000" max="50000" step="1000" value="30000" oninput="updatePrice(this.value)">
-                <span id="price-label">KSH300,000 - KSH50,OOO</span>
-            </div>
-    
-            <button class="search-button" onclick="performSearch()">Search now</button>
-        </div>
-    
-    </div>
+{% load static %}
+{% include 'base.html' %}
+  
     <div class="properties">
         <h2>Featured Houses</h2>
         <div class="featured">
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 2.jpg" alt="">
+                    <img src="{% static 'img/building 2.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -108,7 +31,7 @@
         </div>
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 1.jpg" alt="">
+                    <img src="{% static 'img/building 1.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -134,7 +57,7 @@
             
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 2.jpg" alt="">
+                    <img src="{% static 'img/building 2.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -155,12 +78,13 @@
                     <button class="btn det">Details</button>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
     <div class="about">
         <div class="img">
-            <img src="img/3d office room.jpg" alt="">
+            <img src="{% static 'img/3d office room.jpg' %}" alt="">
         </div>
         <div class="aboutUs">
             <h2>Why Choose Us?</h2>
@@ -177,27 +101,27 @@
         <h2>How We Can Help</h2>
         <div class="help">
             <div class="help-card">
-                <img src="img/checklist.png" alt="Detailed Listings Icon" class="help-icon">
+                <img src="{% static 'img/checklist.png' %}" alt="Detailed Listings Icon" class="help-icon">
                 <h3>Property Listings</h3>
                 <p>View comprehensive property information to make informed decisions.</p>
             </div>
             <div class="help-card">
-                <img src="img/search.png" alt="Property Search Icon" class="help-icon">
+                <img src="{% static 'img/search.png' %}" alt="Property Search Icon" class="help-icon">
                 <h3>Property Search</h3>
                 <p>Search for properties using advanced filters to find your perfect match.</p>
             </div>
             <div class="help-card">
-                <img src="img/communicate.png" alt="Contact Landlord Icon" class="help-icon">
+                <img src="{% static 'img/communicate.png' %}" alt="Contact Landlord Icon" class="help-icon">
                 <h3>Direct Contact with Landlords</h3>
                 <p>Communicate securely with landlords directly through the platform.</p>
             </div>
             <div class="help-card">
-                <img src="img/profile.png" alt="Tenant Profile Icon" class="help-icon">
+                <img src="{% static 'img/profile.png' %}" alt="Tenant Profile Icon" class="help-icon">
                 <h3>Tenant Profile</h3>
                 <p>Create a profile to increase your chances of securing a home.</p>
             </div>
             <div class="help-card">
-                <img src="img/book-now.png" alt="Booking and Application Icon" class="help-icon">
+                <img src="{% static 'img/book-now.png' %}" alt="Booking and Application Icon" class="help-icon">
                 <h3>Booking & Application</h3>
                 <p>Apply for properties directly through our secure platform.</p>
             </div>
@@ -209,7 +133,7 @@
         <div class="featured">
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 1.jpg" alt="">
+                    <img src="{% static 'img/building 1.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -232,7 +156,7 @@
             </div>
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 2.jpg" alt="">
+                    <img src="{% static 'img/building 2.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -248,7 +172,7 @@
 
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 2.jpg" alt="">
+                    <img src="{% static 'img/building 2.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -271,7 +195,7 @@
             </div>
             <div class="card">
                 <div class="card-img-container">
-                    <img src="img/building 1.jpg" alt="">
+                    <img src="{% static 'img/building 1.jpg' %}" alt="">
                     <div class="love-icon">
                         <ion-icon name="heart"></ion-icon>
                     </div>
@@ -286,7 +210,7 @@
         </div>
         <div class="card">
             <div class="card-img-container">
-                <img src="img/building 3.jpg" alt="">
+                <img src="{% static 'img/building 3.jpg' %}" alt="">
                 <div class="love-icon">
                     <ion-icon name="heart"></ion-icon>
                 </div>
@@ -309,7 +233,7 @@
         </div>
         <div class="card">
             <div class="card-img-container">
-                <img src="img/building 2.jpg" alt="">
+                <img src="{% static 'img/building 2.jpg' %}" alt="">
                 <div class="love-icon">
                     <ion-icon name="heart"></ion-icon>
                 </div>
@@ -322,18 +246,18 @@
             </div>
         </div>
     </div>
-    </div>
+        </div>
 
     
-    <div class="cta-section">
-        <h2>Get Listed Your Asset As A Owner</h2>
-        <p>Put your email address and get listed</p>
-        <form class="cta-form">
-            <input type="email" placeholder="Enter your mail address" required>
-            <button type="submit">Get Started</button>
-        </form>
+        <div class="cta-section">
+            <h2>Get Listed Your Asset As A Owner</h2>
+            <p>Put your email address and get listed</p>
+            <form class="cta-form">
+                <input type="email" placeholder="Enter your mail address" required>
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
     </div>
+    
 
-    <script src="script.js"></script>
-</body>
-</html>
+

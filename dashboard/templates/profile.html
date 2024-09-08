@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "dash_base.html" %}
+{% load static %}
+{% block content %}
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Management</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+
     <style>
         * {
             margin: 0;
@@ -242,59 +237,15 @@
     </style>
 </head>
 
-<body>
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="/img/Pystay Housing Logo white.png" style="width:100px" alt="">
-                </div>
-                <div class="hamburger">
-                    <ion-icon name="menu-outline" id="menu-icon"></ion-icon>
-                </div>
-            </div>
-            <div class="menu" id="sidebar-menu">
-                <div class="link">
-                    <ion-icon name="apps-outline"></ion-icon>
-                    <a href="dashboard.html">Dashboard</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="home-outline"></ion-icon>
-                    <a href="properties.html">Properties</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="people-outline"></ion-icon>
-                    <a href="bookings.html">Bookings</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="star-outline"></ion-icon>
-                    <a href="reviews.html">Reviews</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="person-circle-outline"></ion-icon>
-                    <a href="profile.html">Profile</a>
-                </div>
-                <div class="help">
-                    <div class="link">
-                        <ion-icon name="settings-outline"></ion-icon>
-                        <a href="">Settings</a>
-                    </div>
-                    <div class="link">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                        <a href="/index.html">Log out</a>
-                    </div>
-                </div>
-            </div>
-        </aside>
 
-        <!-- Content Container -->
+ 
+       
         <div class="content-container">
             <!-- Profile Management Section -->
             <div class="profile-container">
                 <div class="profile-header">
                     <div class="profile-photo-container">
-                        <img src="/img/profile1.jpg" alt="Profile Photo" class="profile-photo">
+                        <img src="{% static 'img/profile1.jpg' %}" alt="Profile Photo" class="profile-photo">
                         <button class="edit-photo">
                             <ion-icon name="pencil-outline"></ion-icon>
                         </button>
@@ -319,14 +270,12 @@
                 </form>
             </div>
         </div>
-    </div>
+
 
     <script>
         document.getElementById('menu-icon').addEventListener('click', function () {
             document.querySelector('.sidebar').classList.toggle('show');
         });
     </script>
-</body>
-
-</html>
+ {% endblock %}
 

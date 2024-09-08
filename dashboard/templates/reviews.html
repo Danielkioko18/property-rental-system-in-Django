@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "dash_base.html" %}
+{% load static %}
+{% block content %}
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+    
     <style>
         * {
             margin: 0;
@@ -218,51 +213,9 @@ table td {
     </style>
 </head>
 
-<body>
+
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <img src="/img/Pystay Housing Logo white.png" style="width:100px" alt="">
-                </div>
-                <div class="hamburger">
-                    <ion-icon name="menu-outline" id="menu-icon"></ion-icon>
-                </div>
-            </div>
-            <div class="menu" id="sidebar-menu">
-                <div class="link">
-                    <ion-icon name="apps-outline"></ion-icon>
-                    <a href="dashboard.html">Dashboard</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="home-outline"></ion-icon>
-                    <a href="properties.html">Properties</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="people-outline"></ion-icon>
-                    <a href="bookings.html">Bookings</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="star-outline"></ion-icon>
-                    <a href="reviews.html">Reviews</a>
-                </div>
-                <div class="link">
-                    <ion-icon name="person-circle-outline"></ion-icon>
-                    <a href="profile.html">Profile</a>
-                </div>
-                <div class="help">
-                    <div class="link">
-                        <ion-icon name="settings-outline"></ion-icon>
-                        <a href="">Settings</a>
-                    </div>
-                    <div class="link">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                        <a href="">Log out</a>
-                    </div>
-                </div>
-            </div>
-        </aside>
+       
 
         <!-- Content Container -->
         <div class="content-container">
@@ -282,7 +235,7 @@ table td {
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="Profile"><img src="/img/profile1.jpg" class="review-avatar" alt="Profile"></td>
+                            <td data-label="Profile"><img src="{% static 'img/profile1.jpg' %}" class="review-avatar" alt="Profile"></td>
                             <td data-label="Name">Alice Smith</td>
                             <td data-label="Property Name">Luxury Suite</td>
                             <td data-label="Date">2024-08-25</td>
@@ -299,7 +252,7 @@ table td {
                             </td>
                         </tr>
                         <tr>
-                            <td data-label="Profile"><img src="/img/profile1.jpg" class="review-avatar" alt="Profile"></td>
+                            <td data-label="Profile"><img src="{% static 'img/profile1.jpg' %}" class="review-avatar" alt="Profile"></td>
                             <td data-label="Name">Sophia Martinez</td>
                             <td data-label="Property Name">Mountain Retreat</td>
                             <td data-label="Date">2024-09-02</td>
@@ -327,6 +280,4 @@ table td {
             document.querySelector('.sidebar').classList.toggle('show');
         });
     </script>
-</body>
-
-</html>
+{% endblock %}
