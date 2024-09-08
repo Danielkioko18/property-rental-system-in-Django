@@ -21,7 +21,7 @@ class Property(View):
     
 class PropertyDetails(View):
     def get(self, request):
-        return render(request, 'property-details.html')
+        return render(request, 'view.html')
     
 class Contact(View):
     def get(self, request):
