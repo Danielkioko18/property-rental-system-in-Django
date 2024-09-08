@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: pystay
+    plan: free
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn pystay.wsgi:application"
