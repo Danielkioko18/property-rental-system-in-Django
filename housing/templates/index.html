@@ -19,7 +19,7 @@
             <option value="new-york">Kiambu, Ruiru</option>
         </select>
     </div>
-               
+
     <div class="search-field">
         <label for="property-type">Property Type:</label>
         <select id="property-type">
@@ -31,23 +31,24 @@
     </div>
 
     <div class="search-field">
-        <label for="location">Amenities:</label>
-        <select id="location">
+        <label for="amenities">Amenities:</label>
+        <select id="amenities">
             <option value="">Select Amenities</option>
-            <option value="california">Pet friendly</option>
-            <option value="new-york">Parking</option>
-            <option value="new-york">Gym</option>
+            <option value="pet-friendly">Pet friendly</option>
+            <option value="parking">Parking</option>
+            <option value="gym">Gym</option>
         </select>
     </div>
-    
+
     <div class="search-field">
         <label for="price-range">Price Range:</label>
         <input type="range" id="price-range" min="10000" max="50000" step="1000" value="30000" oninput="updatePrice(this.value)">
-        <span id="price-label">KSH300,000 - KSH50,OOO</span>
+        <span id="price-label">KSH30,000 - KSH50,000</span>
     </div>
 
     <button class="search-button" onclick="performSearch()">Search now</button>
 </div>
+
   
     <div class="properties">
         <h2>Featured Houses</h2>
@@ -139,10 +140,11 @@
                 and offering properties with ease and confidence. Unlike traditional rental platforms, 
                 PyStay Housing leverages innovative technology and a commitment to transparency 
                 to ensure both landlords and tenants connect efficiently and securely, creating a 
-                harmonious and efficient rental ecosystem.mission.
-                </p>
+                harmonious and efficient rental ecosystem.
+            </p>
         </div>
     </div>
+    
 
     <div class="help-section">
         <h2>How We Can Help</h2>
@@ -305,6 +307,160 @@
             </form>
         </div>
     </div>
-    
 
 
+    <style>
+        /* Base styles for larger screens */
+.about {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding: 40px; /* Increased padding for more breathing space */
+    /* background-color: yellow; */
+    border-radius: 10px;
+    width: 120%!important;
+    margin: 0 auto; /* Center align the section */
+}
+
+.img {
+    flex: 1;
+    max-width: 50%;
+}
+
+.img img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.aboutUs {
+    flex: 1;
+    width: 180%!important;
+   
+    /* background-color: red; */
+}
+
+.aboutUs h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.aboutUs p {
+    font-size: 16px; 
+    color: #666;
+  
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+    .about {
+        flex-direction: column;
+        padding: 0%; /* Reduced padding for small screens */
+    }
+
+    .img {
+        max-width: 100%; /* Image takes the full width on small screens */
+        margin-bottom: 20px;
+    }
+
+    .img img {
+        width: 150%;
+        height: auto;
+        margin-left: -60%;
+    }
+
+    .aboutUs {
+        max-width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
+
+    .aboutUs h2 {
+        font-size: 28px; /* Reduced font size for small screens */
+    }
+
+    .aboutUs p {
+        font-size: 16px; /* Adjusted font size for readability on small screens */
+        line-height: 1.6;
+    }
+}
+
+    </style>
+
+
+
+<style>
+    /* Base styles */
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+    min-width: 200px;
+}
+
+.search-field label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.search-field select, .search-field input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#price-range {
+    width: 100%;
+}
+
+#price-label {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+
+
+.search-button:hover {
+    background-color: #555;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-field {
+        flex-basis: 100%; /* Full width on smaller screens */
+        min-width: unset;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+}
+
+</style>
+<script>
+    function updatePrice(value) {
+    document.getElementById('price-label').innerHTML = `KSH ${value} - KSH 50,000`;
+}
+
+</script>
