@@ -13,7 +13,7 @@
 <div class="search-bar">
     <div class="search-field">
         <label for="location">Location:</label>
-        <select id="location">
+        <select id="location" class="property-type-input">
             <option value="">Select Location</option>
             <option value="california">Nairobi, Kenya</option>
             <option value="new-york">Kiambu, Ruiru</option>
@@ -22,7 +22,7 @@
 
     <div class="search-field">
         <label for="property-type">Property Type:</label>
-        <select id="property-type">
+        <select id="property-type" class="property-type-input2">
             <option value="">Select Type</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
@@ -32,7 +32,7 @@
 
     <div class="search-field">
         <label for="amenities">Amenities:</label>
-        <select id="amenities">
+        <select id="amenities" class="property-type-input3">
             <option value="">Select Amenities</option>
             <option value="pet-friendly">Pet friendly</option>
             <option value="parking">Parking</option>
@@ -361,6 +361,21 @@
     .properties{
             margin-top: 140%!important;
         }
+
+    .property-type-input{
+            width: 200%!important;
+            margin-left: -50%;
+        }
+
+        .property-type-input2{
+            width: 242%!important;
+            margin-left: -70%;
+        }
+
+        .property-type-input3{
+            width: 185%!important;
+            margin-left: -42%;
+        }
     .about {
         flex-direction: column;
         padding: 0%; /* Reduced padding for small screens */
@@ -392,6 +407,8 @@
         font-size: 16px; /* Adjusted font size for readability on small screens */
         line-height: 1.6;
     }
+
+   
 }
 
     </style>
