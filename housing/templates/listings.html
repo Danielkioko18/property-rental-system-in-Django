@@ -10,7 +10,7 @@
         <div class="property-listings">
             <h2>Available Properties</h2>
             <div class="card-container">
-                <a href="{% url 'property-details' %}">
+               
                     <div class="card" >
                         <div class="card-img-container">
                             <img src="{% static 'img/building 2.jpg' %}" alt="Property Image">
@@ -22,10 +22,10 @@
                             <h3>2 Bedroom House</h3>
                             <p>Nairobi, Kenya</p>
                             <p>KSH 40,000 / month</p>
-                            <button class="btn det">Details</button>
+                            <a href="{% url 'property-details' %}">  <button class="btn det">Details</button> </a>
                         </div>
                     </div>
-                </a>
+               
                 <div class="card">
                     <div class="card-img-container">
                         <img src="{% static 'img/building 4.jpg' %}" alt="Property Image">
