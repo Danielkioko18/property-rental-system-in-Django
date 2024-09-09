@@ -10,6 +10,58 @@
         
     </div>
 </div>
+
+<style>
+    /* Base styles for the hero section */
+.hero {
+    background-image: url("{% static 'img/1.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 500px; /* Set minimum height for the section */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    padding: 40px 20px; /* Add padding for spacing */
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+}
+
+.search {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .hero {
+        padding: 20px;
+        min-height: 400px; /* Adjust height for small screens */
+    }
+
+    .hero-content h1 {
+        font-size: 28px; /* Reduce font size on smaller screens */
+        line-height: 1.3;
+    }
+
+    .search {
+        width: 100%; /* Ensure the search bar/content is responsive */
+        margin-top: 20px;
+    }
+}
+
+</style>
 <div class="search-bar">
     <div class="search-field">
         <label for="location">Location:</label>
