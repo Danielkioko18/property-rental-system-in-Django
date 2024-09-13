@@ -1,2 +1,145 @@
-{% load static %}
-{% include 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - PyStay Housing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3070b9',
+                    },
+                    boxShadow: {
+                        'custom': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+{% include 'navbar.html'%}
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-primary mb-8 text-center">About PyStay Housing</h1>
+        
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-primary mb-4 flex items-center">
+                    <i class="fas fa-bullseye mr-2"></i> Our Mission
+                </h2>
+                <p class="text-gray-700">
+                    Our mission at PyStay Housing is to bridge the gap between landlords and tenants by
+                    providing a platform that offers a hassle-free, reliable, and efficient rental experience.
+                    We aim to simplify property management and rental searching, ensuring that both
+                    parties find the perfect match with ease and confidence.
+                </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-primary mb-4 flex items-center">
+                    <i class="fas fa-eye mr-2"></i> Our Vision
+                </h2>
+                <p class="text-gray-700">
+                    To become the leading online marketplace for property rentals, where every tenant
+                    finds their ideal home and every landlord meets the perfect tenant. We strive to build a
+                    community where the rental experience is straightforward, trustworthy, and satisfying
+                    for all users.
+                </p>
+            </div>
+        </div>
+        
+        <h2 class="text-3xl font-bold text-primary mb-6 text-center">Our Services</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold text-primary mb-4 flex items-center">
+                    <i class="fas fa-home mr-2"></i> For Landlords
+                </h3>
+                <ul class="list-none space-y-4">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Property Listing</h4>
+                            <p class="text-gray-700">List properties with ease and attract potential tenants.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Inquiries and Communication</h4>
+                            <p class="text-gray-700">Manage tenant interactions and communications.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Tenant Screening</h4>
+                            <p class="text-gray-700">Screen potential tenants to ensure a good fit.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Booking and Management</h4>
+                            <p class="text-gray-700">Handle bookings and property management tasks seamlessly.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-2xl font-semibold text-primary mb-4 flex items-center">
+                    <i class="fas fa-users mr-2"></i> For Tenants
+                </h3>
+                <ul class="list-none space-y-4">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Property Search</h4>
+                            <p class="text-gray-700">Search for properties using advanced filters.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Detailed Property Listings</h4>
+                            <p class="text-gray-700">View comprehensive property information.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Direct Contact with Landlords</h4>
+                            <p class="text-gray-700">Communicate with landlords securely.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Tenant Profile</h4>
+                            <p class="text-gray-700">Create a profile to increase your chances of securing a home.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                        <div>
+                            <h4 class="font-semibold">Booking and Application</h4>
+                            <p class="text-gray-700">Apply for properties directly through the platform.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
