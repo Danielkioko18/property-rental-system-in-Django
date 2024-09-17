@@ -1,115 +1,98 @@
 {% load static %}
 {% include 'base.html' %}
 
+<head>
     <link rel="stylesheet" href="{% static 'css/listings.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" type="image/x-icon">
-  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
     <div class="main">
-      
-        
-        <div class="property-listings">
-            <h2>Available Properties</h2>
-            <div class="card-container">
-               
-                    <div class="card" >
+        <!-- Banner Section -->
+        <div class="banner">
+            <h2>Why Choose Us?</h2>
+            <p>Leading online marketplace that simplifies the process of finding 
+                and offering properties with ease and confidence. Unlike traditional rental platforms, 
+                PyStay Housing leverages innovative technology and a commitment to transparency 
+                to ensure both landlords and tenants connect efficiently and securely, creating a 
+                harmonious and efficient rental ecosystem.
+            </p>
+        </div>
+
+        <!-- Search and Listing Section -->
+        <div class="content-wrapper">
+            <!-- Search Bar -->
+            <aside class="search-sidebar">
+                <h2>Filter Properties</h2>
+                <form class="search-form">
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" placeholder="Enter city or area">
+                    </div>
+                    <div class="form-group">
+                        <label for="price-range">Price Range:</label>
+                        <select id="price-range" name="price-range">
+                            <option value="">Any</option>
+                            <option value="0-20000">0 - 20,000 KSH</option>
+                            <option value="20000-40000">20,000 - 40,000 KSH</option>
+                            <option value="40000-60000">40,000 - 60,000 KSH</option>
+                            <option value="60000+">60,000+ KSH</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms:</label>
+                        <select id="bedrooms" name="bedrooms">
+                            <option value="">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4+">4+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="property-type">Property Type:</label>
+                        <select id="property-type" name="property-type">
+                            <option value="">Any</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn search-btn">Search</button>
+                </form>
+            </aside>
+
+            <!-- Property Listings -->
+            <div class="property-listings">
+                <h2>Available Properties</h2>
+                <div class="card-container">
+                    <!-- Static property data -->
+                    {% for property in property_list %}
+                    <div class="card">
                         <div class="card-img-container">
-                            <img src="{% static 'img/building 2.jpg' %}" alt="Property Image">
+                            <img src="{{ property.image }}" alt="{{ property.title }}">
                             <div class="love-icon">
-                                <ion-icon name="heart"></ion-icon>
+                                <i class="fas fa-heart"></i>
                             </div>
                         </div>
                         <div class="card-content">
-                            <h3>2 Bedroom House</h3>
-                            <p>Nairobi, Kenya</p>
-                            <p>KSH 40,000 / month</p>
-                            <a href="{% url 'property-details' %}">  <button class="btn det">Details</button> </a>
+                            <h3>{{ property.title }}</h3>
+                            <p><i class="fas fa-map-marker-alt"></i> {{ property.location }}</p>
+                            <p><i class="fas fa-money-bill-wave"></i> KSH {{ property.price }} / month</p>
+                            <p><i class="fas fa-bed"></i> {{ property.bedrooms }} Bedrooms</p>
+                            <a href="#">
+                                <button class="btn det">View Details</button>
+                            </a>
                         </div>
                     </div>
-               
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 4.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 5.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 1.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 3.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 1.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img-container">
-                        <img src="{% static 'img/building 2.jpg' %}" alt="Property Image">
-                        <div class="love-icon">
-                            <ion-icon name="heart"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>2 Bedroom House</h3>
-                        <p>Nairobi, Kenya</p>
-                        <p>KSH 40,000 / month</p>
-                        <button class="btn det">Details</button>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -118,3 +101,72 @@
     <!-- Footer -->
     {% include 'footer.html'%}
 
+    <script>
+        // Static property data
+        const propertyList = [
+            {
+                title: "Modern 2 Bedroom Apartment",
+                location: "Nairobi, Kenya",
+                price: "40,000",
+                bedrooms: "2",
+                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                title: "Spacious 3 Bedroom House",
+                location: "Mombasa, Kenya",
+                price: "55,000",
+                bedrooms: "3",
+                image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                title: "Cozy 1 Bedroom Studio",
+                location: "Kisumu, Kenya",
+                price: "25,000",
+                bedrooms: "1",
+                image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                title: "Luxury 4 Bedroom Villa",
+                location: "Nakuru, Kenya",
+                price: "80,000",
+                bedrooms: "4",
+                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            }
+        ];
+
+        // Add propertyList to the template context
+        document.addEventListener('DOMContentLoaded', function() {
+            const context = { property_list: propertyList };
+            const source = document.getElementById('property-template').innerHTML;
+            const template = Handlebars.compile(source);
+            const html = template(context);
+            document.querySelector('.card-container').innerHTML = html;
+        });
+    </script>
+
+    <script id="property-template" type="text/x-handlebars-template">
+        {% verbatim %}
+        {{#each property_list}}
+        <div class="card">
+            <div class="card-img-container">
+                <img src="{{image}}" alt="{{title}}">
+                <div class="love-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3>{{title}}</h3>
+                <p><i class="fas fa-map-marker-alt"></i> {{location}}</p>
+                <p><i class="fas fa-money-bill-wave"></i> KSH {{price}} / month</p>
+                <p><i class="fas fa-bed"></i> {{bedrooms}} Bedrooms</p>
+                <a href="#">
+                    <button class="btn det">View Details</button>
+                </a>
+            </div>
+        </div>
+        {{/each}}
+        {% endverbatim %}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+</body>
