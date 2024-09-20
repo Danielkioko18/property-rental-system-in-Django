@@ -1,13 +1,6 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
-    width: 100%;
-    overflow-x: hidden;
     background-color: #f5f5f5;
 }
 
@@ -24,14 +17,30 @@ body {
     z-index: 1000;
 }
 
+.banner__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.banner__desc{
+    font-size: 1.5rem;
+    color: white;
+    padding: 16px;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
 .main {
     margin-top: 2px; /* To account for fixed navbar */
-    padding: 20px;
 }
 
 /* Banner Styles */
 .banner {
-    background-image: url("https://images.pexels.com/photos/27920274/pexels-photo-27920274/free-photo-of-real-estate-business-finance-background-template-calculator-door-key.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    background-color: #0662CD;
     background-size: cover;
     background-position: center;
     height: 80vh;
@@ -44,13 +53,13 @@ body {
     text-align: center;
     position: relative;
     margin-bottom: 20px;
+    padding: 6px;
 }
 .banner h2 {
     font-size: 3rem;
     margin-bottom: 20px;
 }
 
-/* ... (other banner styles remain unchanged) ... */
 
 /* Content Wrapper Styles */
 .content-wrapper {
@@ -217,6 +226,9 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .property-listings {
+        margin-left: 50px;
+    }
     .content-wrapper {
         flex-direction: column;
     }
