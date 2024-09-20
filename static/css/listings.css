@@ -43,7 +43,7 @@ body {
     background-color: #0662CD;
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 40vh;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -55,10 +55,10 @@ body {
     margin-bottom: 20px;
     padding: 6px;
 }
-.banner h2 {
+/* .banner h2 {
     font-size: 3rem;
     margin-bottom: 20px;
-}
+} */
 
 
 /* Content Wrapper Styles */
@@ -78,11 +78,15 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
+    margin-top: 70px;
+    height: fit-content;
 }
 
 .search-sidebar h2 {
     margin-bottom: 20px;
     color: #333;
+    font-size: x-large;
+    font-weight: 500;
 }
 
 .search-form .form-group {
@@ -122,6 +126,8 @@ body {
     margin-bottom: 20px;
     font-size: 2rem;
     color: #333;
+    text-align: center;
+    font-weight: 500;
 }
 
 .card-container {
@@ -227,7 +233,40 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .property-listings {
-        margin-left: 50px;
+        margin-left: 30px;
+    }
+    .property-listings h2 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        color: #333;
+        font-weight: 500;
+    }
+    .banner__title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        font-family: "Montserrat Alternates", sans-serif;
+        font-weight: 800;
+        font-style: normal;
+        padding-top: 16px;
+    }
+    .banner__desc {
+        font-size: 1rem;
+        color: white;
+        padding: 16px;
+        font-family: "Montserrat Alternates", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+    }
+    .search-sidebar {
+        width: 300px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-right: 20px;
+        margin-top: 0px;
+        height: fit-content;
     }
     .content-wrapper {
         flex-direction: column;
