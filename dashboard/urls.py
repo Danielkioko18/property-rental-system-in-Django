@@ -8,6 +8,9 @@ urlpatterns = [
     path('reviews/', Review.as_view(), name='reviews'),
     path('bookings/', Booking.as_view(), name='bookings'),
     path('profile/', Profile.as_view(), name='profile'),
+    path('housing/create/', HousingCreateView.as_view(), name='housing_create'),
+    path('housing/<int:pk>/update/', HousingUpdateView.as_view(), name='housing_update'),
 
 
 ]
+
