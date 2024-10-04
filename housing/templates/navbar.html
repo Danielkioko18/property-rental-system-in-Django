@@ -24,20 +24,38 @@
                 </div>
                 <!-- Buttons only visible on large screens -->
                 <div class="started">
-                    <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
-                    <a href="{% url 'dashboard' %}"><button class="btn start">Get Started</button></a>
+                    {% if user.is_authenticated %}
+                        <span class="welcome-message">Hello, {{ user.first_name }} {{ user.last_name }}</span>
+                        <div class="btn-group">
+                            <a href="{% url 'dashboard' %}">
+                                <button class="btn start">Dashboard</button>
+                            </a>
+                            <a href="{% url 'logout' %}">
+                                <button class="btn logout">Logout</button>
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'auth' %}">
+                            <button class="btn login">Login/Sign Up</button>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
     
-        <!-- Dropdown menu for small screens -->
         <div class="dropdown-menu" id="dropdownMenu">
+        
+            {% if user.is_authenticated %}
+            <p class="welcome-message">Helloss, {{ user.first_name }} {{ user.last_name }}</p>
+            <a href="{% url 'dashboard' %}"><button class="btn start">Dashboard</button></a>
+    
+            <a href="{% url 'logout' %}"><button class="btn logout">Logout</button></a>
+            {% else %}
+                <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
+            {% endif %}
+    
             
-            
-            
-            <!-- Buttons visible inside the dropdown on small screens -->
-            <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
-            <a href="{% url 'dashboard' %}"><button class="btn start">Get Started</button></a>
+           
         </div>
     </div>
     
