@@ -4,7 +4,7 @@ from .forms import *
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
@@ -35,3 +35,8 @@ def custom_login_view(request):
 
     return render(request, 'auth-page.html')
 
+
+def custom_logout_view(request):
+    logout(request)  
+    messages.success(request, 'You have been successfully logged out.')  
+    return redirect('auth')  
