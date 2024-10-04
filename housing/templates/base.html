@@ -35,26 +35,137 @@
                 
                 
             </div>
-            <!-- Buttons only visible on large screens -->
+            
+
             <div class="started">
-                <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
-                <a href="{% url 'dashboard' %}"><button class="btn start">Get Started</button></a>
+                {% if user.is_authenticated %}
+                    <span class="welcome-message">Hello, {{ user.first_name }} {{ user.last_name }}</span>
+                    <div class="btn-group">
+                        <a href="{% url 'dashboard' %}">
+                            <button class="btn start">Dashboard</button>
+                        </a>
+                        <a href="{% url 'logout' %}">
+                            <button class="btn logout">Logout</button>
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{% url 'auth' %}">
+                        <button class="btn login">Login/Sign Up</button>
+                    </a>
+                {% endif %}
             </div>
+            
+            
         </div>
     </nav>
-
-    <!-- Dropdown menu for small screens -->
     <div class="dropdown-menu" id="dropdownMenu">
         
+        {% if user.is_authenticated %}
+        <p class="welcome-message">Helloss, {{ user.first_name }} {{ user.last_name }}</p>
+        <a href="{% url 'dashboard' %}"><button class="btn start">Dashboard</button></a>
+
+        <a href="{% url 'logout' %}"><button class="btn logout">Logout</button></a>
+        {% else %}
+            <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
+        {% endif %}
+
         
        
-        <!-- Buttons visible inside the dropdown on small screens -->
-        <a href="{% url 'auth' %}"><button class="btn login">Login/Sign Up</button></a>
-        <a href="{% url 'dashboard' %}"><button class="btn start">Get Started</button></a>
     </div>
 </div>
 
+<style>
+    /* General Styling for the Navigation Container */
+.started {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align to the right */
+    margin: 0;
+    padding: 10px 20px;
+}
 
+/* Welcome message styling */
+.welcome-message {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500; /* Slightly bold */
+    margin: 0 10px; /* Margin around the message */
+}
+
+/* Button group styling */
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+}
+
+/* General button styling */
+.btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px; /* Rounded buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    font-size: 0.875rem; /* Slightly smaller font */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: 600; /* Bold text */
+}
+
+/* Dashboard button styling */
+.btn.start {
+    background-color: #1f78b4; /* Dark blue color */
+    color: white;
+}
+
+.btn.start:hover {
+    background-color: #1565c0; 
+}
+
+
+.btn.logout {
+    background-color: #6c757d; 
+    color: white;
+}
+
+.btn.logout:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+/* Login button styling */
+.btn.login {
+    background-color: #007bff; /* Blue color */
+    color: white;
+}
+
+.btn.login:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.started a {
+    text-decoration: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .started {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .welcome-message {
+        margin-bottom: 10px;
+    }
+}
+
+</style>
 
 <style>
 

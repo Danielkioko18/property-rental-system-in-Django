@@ -3,8 +3,9 @@ from django.views.generic import CreateView,UpdateView
 from .forms import *
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import path
-from django.contrib.auth import views as auth_views
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 
 class UserRegisterView(CreateView):
@@ -21,26 +22,14 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('profile')
 
 
-
-
-
-
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-from django.contrib import messages
-
 def custom_login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
-        # Authenticate the user
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)  
-            return redirect('property')  
+            return redirect('listings')  
         else:
             messages.error(request, 'Invalid username or password')  
 
