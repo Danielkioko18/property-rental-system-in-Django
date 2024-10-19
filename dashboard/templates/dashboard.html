@@ -9,13 +9,20 @@
         <input type="text" placeholder="Search for anything">
     </div>
     <div class="user-info">
-        <p class="username">Crystal</p>
+        {% if user.is_authenticated %}
+        <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
         <div class="prof">
             <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
         </div>
+        
         <div class="icon">
             <ion-icon name="notifications-outline"></ion-icon>
+           
         </div>
+        <a href="{% url 'logout' %}">
+            <button class="btn logout">Logout</button>
+        </a>
+        {% endif %}
     </div>
 </header>
              <!-- Overview Section -->

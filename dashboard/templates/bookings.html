@@ -270,10 +270,15 @@
                 <!-- User Information Section -->
                 <div class="user-info">
                     <div class="user-details">
+                        {% if user.is_authenticated %}
                         <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" class="user-avatar">
                         <div class="user-meta">
-                            <p><strong>Crystal</strong></p>
+                            <p><strong>Hello, {{ user.first_name }} {{ user.last_name }}</strong></p>
+                            <a href="{% url 'logout' %}">
+                                <button class="btn logout">Logout</button>
+                            </a>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="filter-container">
                         <select id="status-filter">
