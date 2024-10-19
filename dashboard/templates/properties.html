@@ -151,7 +151,7 @@
             }
         });
 
-        // Image Preview Functionality
+        // Image Preview Function for Main Image
         function previewMainImage(event) {
             const file = event.target.files[0];
             const imgPreview = document.getElementById('main-preview-img');
@@ -167,22 +167,18 @@
             }
         }
 
+        // Function to preview multiple additional images (no limit)
         function previewAdditionalImages(event) {
-            const files = event.target.files;  // Get the files from the input
+            const files = event.target.files;  // Get all selected files
             const output = document.getElementById('additional-images-preview');
-            output.innerHTML = '';  // Clear any existing previews
 
             Array.from(files).forEach(file => {
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
                 img.classList.add('preview-image');  // Apply styling
-                output.appendChild(img);  // Add each preview to the container
+                output.appendChild(img);  // Append image preview
             });
         }
-
-        // Attach the event listeners for image preview
-        document.getElementById('photo_main').addEventListener('change', previewMainImage);
-        document.getElementById('images').addEventListener('change', previewAdditionalImages);
     </script>
 
     <!-- CSS Styling -->
@@ -248,11 +244,24 @@
     /* Image Preview Styles */
     .image-preview-container {
         display: flex !important;
-        flex-wrap: wrap !important; /* Allow images to wrap within the container */
-        justify-content: center !important;
+        flex-direction: row !important; /* Display images in a row */
+        justify-content: flex-start !important;
         align-items: center !important;
         margin-top: 15px !important;
         gap: 10px !important; /* Add spacing between images */
+        border: 1px solid #ddd !important; /* Add border around the preview container */
+        padding: 10px !important; /* Add padding inside the container */
+        border-radius: 8px !important; /* Slightly rounded corners */
+        background-color: #f9f9f9 !important;
+        max-width: 100% !important;
+        overflow-x: auto !important; /* Enable horizontal scrolling if necessary */
+    }
+
+    /* Ensure responsive column layout for mobile */
+    @media (max-width: 768px) {
+        .image-preview-container {
+            flex-direction: column !important; /* Stack images vertically on small screens */
+        }
     }
 
     .image-box {
