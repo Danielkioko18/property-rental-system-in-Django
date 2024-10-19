@@ -168,16 +168,16 @@
         }
 
         function previewAdditionalImages(event) {
+            const files = event.target.files;  // Get the files from the input
             const output = document.getElementById('additional-images-preview');
-            output.innerHTML = '';  // Clear any existing images
+            output.innerHTML = '';  // Clear any existing previews
 
-            const files = event.target.files;
-            for (let i = 0; i < files.length; i++) {
+            Array.from(files).forEach(file => {
                 const img = document.createElement('img');
-                img.src = URL.createObjectURL(files[i]);
-                img.classList.add('preview-image');
-                output.appendChild(img);
-            }
+                img.src = URL.createObjectURL(file);
+                img.classList.add('preview-image');  // Apply styling
+                output.appendChild(img);  // Add each preview to the container
+            });
         }
 
         // Attach the event listeners for image preview
@@ -248,9 +248,11 @@
     /* Image Preview Styles */
     .image-preview-container {
         display: flex !important;
+        flex-wrap: wrap !important; /* Allow images to wrap within the container */
         justify-content: center !important;
         align-items: center !important;
         margin-top: 15px !important;
+        gap: 10px !important; /* Add spacing between images */
     }
 
     .image-box {
@@ -265,10 +267,12 @@
     }
 
     .preview-image {
-        width: 100% !important;
-        height: 100% !important;
+        width: 150px !important;
+        height: 150px !important;
         object-fit: cover !important;
-        display: none !important;
+        display: block !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
 
     #no-image-text {
