@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import User
 from django.utils.text import slugify
+import uuid
 
 class Housing(models.Model):
     landlord = models.ForeignKey(User, on_delete=models.CASCADE, related_name='houses')
@@ -25,9 +26,12 @@ class Housing(models.Model):
     def __str__(self):
         return self.title
 
+
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            # Create a slug using title and a portion of the UUID
+            unique_id = str(uuid.uuid4())[:8]  # You can use more or fewer characters from the UUID
+            self.slug = slugify(self.title) + '-' + unique_id
         super().save(*args, **kwargs)
 
 class HousingImage(models.Model):

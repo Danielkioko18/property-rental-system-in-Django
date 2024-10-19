@@ -1,150 +1,268 @@
 {% extends "dash_base.html" %}
 {% load static %}
 {% block content %}
-        <main class="main-content">
-           
- <!-- Header -->
- <header class="header">
-    <div class="search-bar">
-        <input type="text" placeholder="Search for anything">
-    </div>
-    <div class="user-info">
-        {% if user.is_authenticated %}
-        <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
-        <div class="prof">
-            <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
+<main class="main-content">
+    <!-- Header -->
+    <header class="header">
+        <div class="search-bar">
+            <form method="GET" action="{% url 'dashboard' %}">
+                <input type="text" name="q" placeholder="Search for anything" value="{{ request.GET.q }}">
+            </form>
         </div>
-        
-        <div class="icon">
-            <ion-icon name="notifications-outline"></ion-icon>
-           
+        <div class="user-info">
+            {% if user.is_authenticated %}
+            <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
+            <div class="prof">
+                <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px; height:40px; border-radius: 50%;">
+            </div>
+            <div class="icon">
+                <ion-icon name="notifications-outline"></ion-icon>
+            </div>
+            <a href="{% url 'logout' %}">
+                <button class="btn logout">Logout</button>
+            </a>
+            {% endif %}
         </div>
-        <a href="{% url 'logout' %}">
-            <button class="btn logout">Logout</button>
-        </a>
-        {% endif %}
-    </div>
-</header>
-             <!-- Overview Section -->
-             <section class="overview">
-                <!-- Stats Cards -->
-                <div class="stats">
-                    <div class="panel">
-                        <h4>900</h4>
-                        <p>Views</p>
-                    </div>
-                    <div class="panel">
-                        <h4>210</h4>
-                        <p> Total Bookings</p>
-                    </div>
-                    <div class="panel">
-                        <h4>80</h4>
-                        <p>Enquires</p>
-                    </div>
-                    <div class="panel">
-                        <h4>$31840</h4>
-                        <p>Total Revenue</p>
-                    </div>
-                </div>
+    </header>
+    
+    <!-- Overview Section -->
+    <section class="overview">
+        <!-- Stats Cards -->
+        <div class="stats">
+            <div class="panel">
+                <h4>{{ total_properties }}</h4>
+                <p>Total Properties</p>
+            </div>
+            <div class="panel">
+                <h4>{{ total_units }}</h4>
+                <p>Total Available Units</p>
+            </div>
+            <div class="panel">
+                <h4>${{ total_revenue }}</h4>
+                <p>Total Revenue Estimate</p>
+            </div>
+        </div>
 
-                <!-- Graph Section -->
-                <div class="graph-section">
-                    <div class="panel">
-                        <h3>Monthly Revenue</h3>
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                </div>
-                
+        <!-- Graph Section -->
+        <div class="graph-section">
+            <div class="panel">
+                <h3>Monthly Revenue</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
 
-                <!-- Details and Notifications -->
-                <div class="overview-content">
-                    <!-- Left Side - Details Panel -->
-                    <div class="div1">
-                        <div class="panel notifications-panel">
-                            <h3>New Messages</h3>
-                            <div class="notification not">
-                                <div class="profile">
-                                    <img src="{% static 'img/profile1.jpg' %}" alt="Profile" class="notification-profile">
-                                </div>
-                                <p><strong>John Doe:</strong> Interested in viewing property XYZ.</p>
-                            </div>
-                            <div class="notification not">
-                                <img src="{% static 'img/profile1.jpg' %}" alt="Profile" class="notification-profile">
-                                <p><strong>Jane Smith:</strong> Has a question about rent payment.</p>
-                            </div>
-                            <div class="notification not">
-                                <img src="{% static 'img/profile3.jpg' %}" alt="Profile" class="notification-profile">
-                                <p><strong>Michael Johnson:</strong> Would like to negotiate lease terms.</p>
-                            </div>
-                        </div>
-                        
-                    </div>
+        <!-- Property Listings -->
+        <div class="overview-content">
+            <h3>Property Listings</h3>
+            <table class="properties-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Main Image</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                        <th>Bedrooms</th>
+                        <th>Square Footage</th>
+                        <th>Amenities</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if property.photo_main and property.photo_main.url %}
+                                <img src="{{ property.photo_main.url }}" alt="Property Image" class="property-image">
+                            {% else %}
+                                <img src="{% static 'img/default-property.jpg' %}" alt="Default Property Image" class="property-image">
+                            {% endif %}
+                        </td>
+                        <td>{{ property.address }}</td>
+                        <td>${{ property.price }}</td>
+                        <td>{{ property.bedrooms }}</td>
+                        <td>{{ property.sqft }} sqft</td>
+                        <td>{{ property.description }}</td>
+                        <td>
+                            <form action="{% url 'property-delete' property.pk %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-button">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
 
-                    <!-- Right Side - Notifications -->
-                    <div class="div1">
-                        <div class="panel notifications-panel">
-                            <h3>Email Notifications</h3>
-                            <div class="notification">
-                                <p><strong>John Doe:</strong> Requested maintenance for Unit 5A</p>
-                                <p><strong>Jane Smith:</strong> Paid rent for Unit 3B</p>
-                                <p><strong>Michael Johnson:</strong> New tenant for Unit 2C</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-         
-                    
-        </main>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<!-- Ionicons and Chart.js -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    const ctx = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(ctx, {
-        type: 'line', 
-        data: {
-            labels: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August', 'Sept', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Monthly Revenue ($)',
-                data: [12000, 15000, 14000, 18000, 19000, 22000, 21000, 24000, 23000, 25000, 27000, 26000],
-                backgroundColor: 'rgba(6, 98, 205, 0.2)',
-                borderColor: '#0662CD',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.3 // Smooth the line a bit
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{% url "revenue-data" %}')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('revenueChart').getContext('2d');
+                const revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Monthly Revenue ($)',
+                            data: data.monthly_revenue,
+                            backgroundColor: 'rgba(6, 98, 205, 0.2)',
+                            borderColor: '#0662CD',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value;
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return '$' + tooltipItem.raw;
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return '$' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
-    });
-    document.getElementById('menu-icon').addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.toggle('show');
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching revenue data:", error);
+            });
     });
 </script>
+
+<style>
+    /* General improvements */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f7f8fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header styling */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #0662CD;
+        color: white;
+    }
+
+    .search-bar input {
+        padding: 10px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        width: 250px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .username {
+        margin: 0;
+        font-size: 16px;
+        color: #fff;
+    }
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    /* Stats section styling */
+    .stats {
+        display: flex;
+        gap: 20px;
+        justify-content: space-around;
+        padding: 20px 0;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .panel {
+        padding: 20px;
+        background-color: #f7f8fa;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Graph section styling */
+    .graph-section {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    /* Property listings table */
+    .properties-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .properties-table th {
+        background-color: #0662CD;
+        color: white;
+    }
+
+    .property-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .delete-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #e74c3c;
+    }
+</style>
+
 {% endblock %}
