@@ -10,52 +10,48 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-      
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="main" style="margin-top: 5%;">
-        <!-- Banner Section -->
-     
-
         <!-- Search and Listing Section -->
-        <div class="content-wrapper ">
+        <div class="content-wrapper">
             <!-- Search Bar -->
             <aside class="search-sidebar">
                 <h2>Filter Properties</h2>
-                <form class="search-form">
+                <form class="search-form" method="GET" action="{% url 'listings' %}">
                     <div class="form-group">
                         <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" placeholder="Enter city or area">
+                        <input type="text" id="location" name="location" placeholder="Enter city or area" value="{{ request.GET.location }}">
                     </div>
                     <div class="form-group">
                         <label for="price-range">Price Range:</label>
-                        <select id="price-range" name="price-range">
+                        <select id="price-range" name="price_range">
                             <option value="">Any</option>
-                            <option value="0-20000">0 - 20,000 KSH</option>
-                            <option value="20000-40000">20,000 - 40,000 KSH</option>
-                            <option value="40000-60000">40,000 - 60,000 KSH</option>
-                            <option value="60000+">60,000+ KSH</option>
+                            <option value="0-20000" {% if request.GET.price_range == "0-20000" %}selected{% endif %}>0 - 20,000 KSH</option>
+                            <option value="20000-40000" {% if request.GET.price_range == "20000-40000" %}selected{% endif %}>20,000 - 40,000 KSH</option>
+                            <option value="40000-60000" {% if request.GET.price_range == "40000-60000" %}selected{% endif %}>40,000 - 60,000 KSH</option>
+                            <option value="60000+" {% if request.GET.price_range == "60000+" %}selected{% endif %}>60,000+ KSH</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="bedrooms">Bedrooms:</label>
                         <select id="bedrooms" name="bedrooms">
                             <option value="">Any</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4+">4+</option>
+                            <option value="1" {% if request.GET.bedrooms == "1" %}selected{% endif %}>1</option>
+                            <option value="2" {% if request.GET.bedrooms == "2" %}selected{% endif %}>2</option>
+                            <option value="3" {% if request.GET.bedrooms == "3" %}selected{% endif %}>3</option>
+                            <option value="4+" {% if request.GET.bedrooms == "4+" %}selected{% endif %}>4+</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="property-type">Property Type:</label>
-                        <select id="property-type" name="property-type">
+                        <select id="property-type" name="property_type">
                             <option value="">Any</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="house">House</option>
-                            <option value="villa">Villa</option>
+                            <option value="apartment" {% if request.GET.property_type == "apartment" %}selected{% endif %}>Apartment</option>
+                            <option value="house" {% if request.GET.property_type == "house" %}selected{% endif %}>House</option>
+                            <option value="villa" {% if request.GET.property_type == "villa" %}selected{% endif %}>Villa</option>
                         </select>
                     </div>
                     <button type="submit" class="btn search-btn">Search</button>
@@ -85,82 +81,35 @@
                             </a>
                         </div>
                     </div>
+                    {% empty %}
+                    <p>No properties found.</p>
                     {% endfor %}
                 </div>
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page=1">&laquo; first</a>
+                            <a href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
             </div>
-            
         </div>
     </div>
 
     <!-- Footer -->
     {% include 'footer.html'%}
-
-    <script>
-        // Static property data
-        const propertyList = [
-            {
-                title: "Modern 2 Bedroom Apartment",
-                location: "Nairobi, Kenya",
-                price: "40,000",
-                bedrooms: "2",
-                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-            },
-            {
-                title: "Spacious 3 Bedroom House",
-                location: "Mombasa, Kenya",
-                price: "55,000",
-                bedrooms: "3",
-                image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-            },
-            {
-                title: "Cozy 1 Bedroom Studio",
-                location: "Kisumu, Kenya",
-                price: "25,000",
-                bedrooms: "1",
-                image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-            },
-            {
-                title: "Luxury 4 Bedroom Villa",
-                location: "Nakuru, Kenya",
-                price: "80,000",
-                bedrooms: "4",
-                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-            }
-        ];
-
-        // Add propertyList to the template context
-        document.addEventListener('DOMContentLoaded', function() {
-            const context = { property_list: propertyList };
-            const source = document.getElementById('property-template').innerHTML;
-            const template = Handlebars.compile(source);
-            const html = template(context);
-            document.querySelector('.card-container').innerHTML = html;
-        });
-    </script>
-
-    <script id="property-template" type="text/x-handlebars-template">
-        {% verbatim %}
-        {{#each property_list}}
-        <div class="card">
-            <div class="card-img-container">
-                <img src="{{image}}" alt="{{title}}">
-                <div class="love-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-            </div>
-            <div class="card-content">
-                <h3>{{title}}</h3>
-                <p><i class="fas fa-map-marker-alt"></i> {{location}}</p>
-                <p><i class="fas fa-money-bill-wave"></i> KSH {{price}} / month</p>
-                <p><i class="fas fa-bed"></i> {{bedrooms}} Bedrooms</p>
-                <a href="#">
-                    <button class="btn det">View Details</button>
-                </a>
-            </div>
-        </div>
-        {{/each}}
-        {% endverbatim %}
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 </body>

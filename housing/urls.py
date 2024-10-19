@@ -12,5 +12,7 @@ urlpatterns = [
     path('property-details/<slug:slug>/', PropertyDetails.as_view(), name='property-details'),
     path('', PropertyListing.as_view(), name='listings'),
 
+    
+
 
 ]

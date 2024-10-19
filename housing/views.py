@@ -42,7 +42,7 @@ class PropertyListing(ListView):
 
     def get_queryset(self):
         queryset = Housing.objects.filter(is_published=True)
-        # You can add custom filtering logic here based on the search form
+        # Apply filters from GET parameters if provided
         location = self.request.GET.get('location')
         price_range = self.request.GET.get('price-range')
         bedrooms = self.request.GET.get('bedrooms')
@@ -54,5 +54,6 @@ class PropertyListing(ListView):
         if bedrooms:
             queryset = queryset.filter(bedrooms__gte=bedrooms)
         return queryset
+
 
 
