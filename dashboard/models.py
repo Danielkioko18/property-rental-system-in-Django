@@ -18,7 +18,6 @@ class Housing(models.Model):
     lot_size = models.DecimalField(max_digits=5, decimal_places=1)
     available_units = models.IntegerField(default=1)
     photo_main = models.ImageField(upload_to='photos/%Y/%m/%d/')
-    photo_1 = models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     is_published = models.BooleanField(default=True)
     list_date = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
@@ -30,3 +29,10 @@ class Housing(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+class HousingImage(models.Model):
+    housing = models.ForeignKey(Housing, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='photos/%Y/%m/%d/')
+
+    def __str__(self):
+        return f"Image for {self.housing.title}"

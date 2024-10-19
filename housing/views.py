@@ -27,7 +27,8 @@ class Property(View):
 class PropertyDetails(View):
     def get(self, request, slug):
         property = get_object_or_404(Housing, slug=slug)
-        return render(request, 'view.html', {'property': property})
+        images = property.images.all()  # Fetch all related images
+        return render(request, 'view.html', {'property': property, 'images': images})
 
     
 class Contact(View):

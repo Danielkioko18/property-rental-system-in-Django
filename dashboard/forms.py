@@ -8,5 +8,5 @@ class HousingForm(forms.ModelForm):
             'title', 'address', 'city', 'state', 'zipcode', 
             'description', 'price', 'bedrooms', 'bathrooms', 
             'garage', 'sqft', 'lot_size', 'available_units',
-            'photo_main', 'photo_1', 'is_published'
+            'photo_main', 'is_published'
         ]
