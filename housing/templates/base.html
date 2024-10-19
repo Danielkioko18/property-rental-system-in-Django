@@ -38,9 +38,9 @@
                 {% if user.is_authenticated %}
                     <span class="welcome-message">Hello, {{ user.first_name }} {{ user.last_name }}</span>
                     <div class="btn-group">
-                        <!-- <a href="{% url 'dashboard' %}">
+                        <a href="{% url 'dashboard' %}">
                             <button class="btn start">Dashboard</button>
-                        </a> -->
+                        </a>
                         <a href="{% url 'logout' %}">
                             <button class="btn logout">Logout</button>
                         </a>
