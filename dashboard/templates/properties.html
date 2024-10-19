@@ -2,20 +2,16 @@
 {% load static %}
 {% block content %}
 
-
     <link rel="stylesheet" href="{% static 'css/properties.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
 
     <div class="dashboard-container">
-       
-
-        <!-- Main Content -->
         <main class="main-content">
             <div class="search">
                 <div class="user-info">
-                    <p class="username">Crystal</p>
+                    <p class="username">{{ request.user.username }}</p>
                     <div class="prof">
-                        <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
+                        <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px; height:40px; border-radius: 50%;">
                     </div>
                     <div class="icon">
                         <ion-icon name="notifications-outline"></ion-icon>
@@ -24,47 +20,77 @@
             </div>
             <div class="header">
                 <button class="filter-button" style="margin-right: 20px;">Filter by Category</button>
-                <button class="add-button"> Add a product</button>
-            </div>
-            <div class="filter-list hidden" id="filter-list">
-                <ul>
-                    <li>Location</li>
-                    <li>Price Range</li>
-                    <li>Bedrooms</li>
-                    <li>Square Footage</li>
-                    <li>Amenities</li>
-                </ul>
+                <button class="add-button" id="open-modal">Add a Property</button>
             </div>
 
-            <!-- Modal for Adding Product -->
+            <!-- Modal for Adding Property -->
             <div class="modal hidden" id="add-modal">
                 <div class="modal-content">
                     <span class="close-button" id="close-modal">&times;</span>
                     <h2>Add a Property</h2>
-                    <form id="add-property-form">
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" required>
+                    <form id="add-property-form" method="POST" enctype="multipart/form-data" action="{% url 'properties' %}">
+                        {% csrf_token %}
+                        
+                        <div class="modal-form-grid">
+                            <!-- Column 1 -->
+                            <div class="modal-column">
+                                <label for="title">Title:</label>
+                                <input type="text" id="title" name="title" required>
 
-                        <label for="price">Price:</label>
-                        <input type="text" id="price" name="price" required>
+                                <label for="location">Location:</label>
+                                <input type="text" id="location" name="location" required>
 
-                        <label for="bedrooms">Bedrooms:</label>
-                        <input type="number" id="bedrooms" name="bedrooms" required>
+                                <label for="city">City:</label>
+                                <input type="text" id="city" name="city" required>
 
-                        <label for="square-footage">Square Footage:</label>
-                        <input type="text" id="square-footage" name="square-footage" required>
+                                <label for="state">State:</label>
+                                <input type="text" id="state" name="state" required>
 
-                        <label for="amenities">Amenities:</label>
-                        <input type="text" id="amenities" name="amenities" required>
+                                <label for="price">Price:</label>
+                                <input type="number" id="price" name="price" required>
 
-                        <label for="images">Images or Videos:</label>
-                        <input type="file" id="media" name="media" multiple required>
+                                <label for="bedrooms">Bedrooms:</label>
+                                <input type="number" id="bedrooms" name="bedrooms" required>
 
-                        <button type="submit">Add Property</button>
+                                <label for="bathrooms">Bathrooms:</label>
+                                <input type="number" id="bathrooms" name="bathrooms">
+                            </div>
+
+                            <!-- Column 2 -->
+                            <div class="modal-column">
+                                <label for="garage">Garage:</label>
+                                <input type="number" id="garage" name="garage">
+
+                                <label for="sqft">Square Footage:</label>
+                                <input type="number" id="sqft" name="sqft" required>
+
+                                <label for="lot_size">Lot Size:</label>
+                                <input type="text" id="lot_size" name="lot_size">
+
+                                <label for="description">Description:</label>
+                                <textarea id="description" name="description" required></textarea>
+
+                                <label for="photo_main">Main Image:</label>
+                                <input type="file" id="photo_main" name="photo_main" required accept="image/*" onchange="previewMainImage(event)">
+                                <div id="main-image-preview" class="image-preview-container">
+                                    <div class="image-box">
+                                        <img id="main-preview-img" class="preview-image hidden" alt="Main Image Preview">
+                                        <p id="no-image-text">No Image Uploaded</p>
+                                    </div>
+                                </div>
+
+                                <label for="images">Additional Images:</label>
+                                <input type="file" id="images" name="images" multiple accept="image/*" onchange="previewAdditionalImages(event)">
+                                <div id="additional-images-preview" class="image-preview-container"></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="modal-submit-btn">Add Property</button>
                     </form>
                 </div>
             </div>
 
+            <!-- Property List Table -->
             <div class="table-container">
                 <table class="properties-table">
                     <thead>
@@ -80,52 +106,155 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Property rows will be populated here -->
+                        {% for property in properties %}
                         <tr>
-                            <td>1</td>
-                            <td><img src="{% static 'img/building 3.jpg' %}" alt="Property Image" class="property-image"></td>
-                            <td>Ruaka, Kiambu</td>
-                            <td>$500,000</td>
-                            <td>3</td>
-                            <td>1200 sqft</td>
-                            <td>Pool, gym, parking</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td><img src="{{ property.photo_main.url }}" alt="Property Image" class="property-image"></td>
+                            <td>{{ property.address }}</td>
+                            <td>${{ property.price }}</td>
+                            <td>{{ property.bedrooms }}</td>
+                            <td>{{ property.sqft }} sqft</td>
+                            <td>{{ property.description }}</td>
                             <td>
                                 <ion-icon name="eye-outline" class="view-button"></ion-icon>
                                 <ion-icon name="create-outline" class="edit-button"></ion-icon>
                                 <ion-icon name="trash-outline" class="delete-button"></ion-icon>
                             </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td><img src="{% static 'img/building 2.jpg' %}" alt="Property Image" class="property-image"></td>
-                            <td>Karen,Nairobi </td>
-                            <td>$500,000</td>
-                            <td>3</td>
-                            <td>1200 sqft</td>
-                            <td>Modern kitchen, ample parking, spacious lounge</td>
-                            <td>
-                                <ion-icon name="eye-outline" class="view-button"></ion-icon>
-                                <ion-icon name="create-outline" class="edit-button"></ion-icon>
-                                <ion-icon name="trash-outline" class="delete-button"></ion-icon>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                <!-- Pagination Controls -->
-                <div class="pagination">
-                    <button class="prev-button">Previous</button>
-                    <button class="next-button">Next</button>
-                </div>
             </div>
         </main>
     </div>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-    document.getElementById('menu-icon').addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.toggle('show');
-    });
-    </script>
-    <script src="{% static 'js/properties.js' %}"></script>
+   
 
+    <!-- JavaScript for Modal Functionality -->
+    <script>
+        const addButton = document.querySelector('.add-button');
+        const addModal = document.getElementById('add-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        addButton.addEventListener('click', function() {
+            addModal.style.display = 'flex';
+        });
+
+        closeModalButton.addEventListener('click', function() {
+            addModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === addModal) {
+                addModal.style.display = 'none';
+            }
+        });
+
+        document.getElementById('add-property-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('Form submitted');
+            addModal.style.display = 'none'; 
+        });
+    </script>
+
+<style>
+.modal {
+position: fixed !important;
+z-index: 1000 !important;
+left: 0 !important;
+top: 0 !important;
+width: 100% !important;
+height: 100% !important;
+background-color: rgba(0, 0, 0, 0.5) !important;
+justify-content: center !important;
+align-items: center !important;
+}
+
+
+.modal-content {
+background-color: white !important;
+margin: 5% auto !important;
+padding: 30px !important;
+border-radius: 12px !important;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+width: 70% !important;
+}
+
+.show {
+display: block !important;
+}
+
+
+.modal-form-grid {
+display: flex !important;
+justify-content: space-between !important;
+gap: 20px !important;
+}
+
+
+.modal-column {
+width: 45% !important;
+}
+
+.modal-submit-btn {
+margin-top: 20px !important;
+padding: 10px 20px !important;
+background-color: #007bff !important;
+color: white !important;
+border: none !important;
+cursor: pointer !important;
+width: 100% !important;
+}
+
+input[type="text"], input[type="number"], textarea {
+width: 100% !important;
+padding: 10px !important;
+margin-bottom: 15px !important;
+border: 1px solid #ccc !important;
+border-radius: 5px !important;
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+transition: all 0.2s ease !important;
+}
+
+input:focus, textarea:focus {
+border-color: #007bff !important;
+outline: none !important;
+box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Image Preview Styles */
+.image-preview-container {
+display: flex !important;
+justify-content: center !important;
+align-items: center !important;
+margin-top: 15px !important;
+}
+
+.image-box {
+border: 2px dashed #ccc !important;
+border-radius: 8px !important;
+width: 150px !important;
+height: 150px !important;
+display: flex !important;
+justify-content: center !important;
+align-items: center !important;
+position: relative !important;
+}
+
+.preview-image {
+width: 100% !important;
+height: 100% !important;
+object-fit: cover !important;
+display: none !important;
+}
+
+#no-image-text {
+color: #888 !important;
+font-size: 14px !important;
+}
+
+.preview-image.show {
+display: block !important;
+}
+
+</style>
 {% endblock %}

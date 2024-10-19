@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from django.views.generic import UpdateView
@@ -14,9 +14,37 @@ class Dashboard(View):
     def get(self, request):
         return render(request, 'dashboard.html')
     
-class property(View):
+
+class PropertyView(View):
     def get(self, request):
-        return render(request, 'properties.html')
+        properties = Housing.objects.all()
+        return render(request, 'properties.html', {'properties': properties})
+
+    def post(self, request):
+        # Handling the form submission from the modal
+        location = request.POST.get('location')
+        price = request.POST.get('price')
+        bedrooms = request.POST.get('bedrooms')
+        square_footage = request.POST.get('square-footage')
+        amenities = request.POST.get('amenities')
+        media = request.FILES.getlist('media')
+
+        # Create and save the new property
+        property = Housing.objects.create(
+            address=location,
+            price=price,
+            bedrooms=bedrooms,
+            sqft=square_footage,
+            description=amenities,
+            photo_main=media[0] if media else None,  # Handle main image, or use a placeholder
+        )
+        
+        # Optionally handle additional media like videos or images
+        for file in media[1:]:
+            HousingImage.objects.create(housing=property, image=file)
+        
+        return redirect('property-list')  # Redirect to the property list after successful submission
+
     
 class Review(View):
     def get(self, request):
