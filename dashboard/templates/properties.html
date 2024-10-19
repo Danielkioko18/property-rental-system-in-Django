@@ -70,8 +70,9 @@
                                 <label for="description">Description:</label>
                                 <textarea id="description" name="description" required></textarea>
 
+                                <!-- Main Image Upload -->
                                 <label for="photo_main">Main Image:</label>
-                                <input type="file" id="photo_main" name="photo_main" required accept="image/*" onchange="previewMainImage(event)">
+                                <input type="file" id="photo_main" name="photo_main" accept="image/*" onchange="previewMainImage(event)">
                                 <div id="main-image-preview" class="image-preview-container">
                                     <div class="image-box">
                                         <img id="main-preview-img" class="preview-image hidden" alt="Main Image Preview">
@@ -79,6 +80,7 @@
                                     </div>
                                 </div>
 
+                                <!-- Additional Images Upload -->
                                 <label for="images">Additional Images:</label>
                                 <input type="file" id="images" name="images" multiple accept="image/*" onchange="previewAdditionalImages(event)">
                                 <div id="additional-images-preview" class="image-preview-container"></div>
@@ -127,10 +129,10 @@
             </div>
         </main>
     </div>
-   
 
-    <!-- JavaScript for Modal Functionality -->
+    <!-- JavaScript for Modal and Image Previews -->
     <script>
+        // Open modal when "Add a Property" is clicked
         const addButton = document.querySelector('.add-button');
         const addModal = document.getElementById('add-modal');
         const closeModalButton = document.getElementById('close-modal');
@@ -149,112 +151,134 @@
             }
         });
 
-        document.getElementById('add-property-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            console.log('Form submitted');
-            addModal.style.display = 'none'; 
-        });
+        // Image Preview Functionality
+        function previewMainImage(event) {
+            const file = event.target.files[0];
+            const imgPreview = document.getElementById('main-preview-img');
+            const noImageText = document.getElementById('no-image-text');
+
+            if (file) {
+                imgPreview.src = URL.createObjectURL(file);
+                imgPreview.classList.add('show');
+                noImageText.classList.add('hidden');
+            } else {
+                imgPreview.classList.remove('show');
+                noImageText.classList.remove('hidden');
+            }
+        }
+
+        function previewAdditionalImages(event) {
+            const output = document.getElementById('additional-images-preview');
+            output.innerHTML = '';  // Clear any existing images
+
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(files[i]);
+                img.classList.add('preview-image');
+                output.appendChild(img);
+            }
+        }
+
+        // Attach the event listeners for image preview
+        document.getElementById('photo_main').addEventListener('change', previewMainImage);
+        document.getElementById('images').addEventListener('change', previewAdditionalImages);
     </script>
 
-<style>
-.modal {
-position: fixed !important;
-z-index: 1000 !important;
-left: 0 !important;
-top: 0 !important;
-width: 100% !important;
-height: 100% !important;
-background-color: rgba(0, 0, 0, 0.5) !important;
-justify-content: center !important;
-align-items: center !important;
-}
+    <!-- CSS Styling -->
+    <style>
+    /* Modal styling */
+    .modal {
+        position: fixed !important;
+        z-index: 1000 !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
 
+    .modal-content {
+        background-color: white !important;
+        margin: 5% auto !important;
+        padding: 30px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        width: 70% !important;
+    }
 
-.modal-content {
-background-color: white !important;
-margin: 5% auto !important;
-padding: 30px !important;
-border-radius: 12px !important;
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-width: 70% !important;
-}
+    .modal-form-grid {
+        display: flex !important;
+        justify-content: space-between !important;
+        gap: 20px !important;
+    }
 
-.show {
-display: block !important;
-}
+    .modal-column {
+        width: 45% !important;
+    }
 
+    .modal-submit-btn {
+        margin-top: 20px !important;
+        padding: 10px 20px !important;
+        background-color: #007bff !important;
+        color: white !important;
+        border: none !important;
+        cursor: pointer !important;
+        width: 100% !important;
+    }
 
-.modal-form-grid {
-display: flex !important;
-justify-content: space-between !important;
-gap: 20px !important;
-}
+    input[type="text"], input[type="number"], textarea {
+        width: 100% !important;
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+        border: 1px solid #ccc !important;
+        border-radius: 5px !important;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+        transition: all 0.2s ease !important;
+    }
 
+    input:focus, textarea:focus {
+        border-color: #007bff !important;
+        outline: none !important;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
+    }
 
-.modal-column {
-width: 45% !important;
-}
+    /* Image Preview Styles */
+    .image-preview-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-top: 15px !important;
+    }
 
-.modal-submit-btn {
-margin-top: 20px !important;
-padding: 10px 20px !important;
-background-color: #007bff !important;
-color: white !important;
-border: none !important;
-cursor: pointer !important;
-width: 100% !important;
-}
+    .image-box {
+        border: 2px dashed #ccc !important;
+        border-radius: 8px !important;
+        width: 150px !important;
+        height: 150px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        position: relative !important;
+    }
 
-input[type="text"], input[type="number"], textarea {
-width: 100% !important;
-padding: 10px !important;
-margin-bottom: 15px !important;
-border: 1px solid #ccc !important;
-border-radius: 5px !important;
-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-transition: all 0.2s ease !important;
-}
+    .preview-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: none !important;
+    }
 
-input:focus, textarea:focus {
-border-color: #007bff !important;
-outline: none !important;
-box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
-}
+    #no-image-text {
+        color: #888 !important;
+        font-size: 14px !important;
+    }
 
-/* Image Preview Styles */
-.image-preview-container {
-display: flex !important;
-justify-content: center !important;
-align-items: center !important;
-margin-top: 15px !important;
-}
+    .preview-image.show {
+        display: block !important;
+    }
+    </style>
 
-.image-box {
-border: 2px dashed #ccc !important;
-border-radius: 8px !important;
-width: 150px !important;
-height: 150px !important;
-display: flex !important;
-justify-content: center !important;
-align-items: center !important;
-position: relative !important;
-}
-
-.preview-image {
-width: 100% !important;
-height: 100% !important;
-object-fit: cover !important;
-display: none !important;
-}
-
-#no-image-text {
-color: #888 !important;
-font-size: 14px !important;
-}
-
-.preview-image.show {
-display: block !important;
-}
-
-</style>
 {% endblock %}
