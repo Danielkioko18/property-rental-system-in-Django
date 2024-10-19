@@ -120,9 +120,17 @@
                             <td>{{ property.sqft }} sqft</td>
                             <td>{{ property.description }}</td>
                             <td>
-                                <ion-icon name="eye-outline" class="view-button"></ion-icon>
-                                <ion-icon name="create-outline" class="edit-button"></ion-icon>
-                                <ion-icon name="trash-outline" class="delete-button"></ion-icon>
+                                <!-- <ion-icon name="eye-outline" class="view-button"></ion-icon> -->
+                                <!-- <ion-icon name="create-outline" class="edit-button"></ion-icon> -->
+                                <td>
+                                    <form action="{% url 'property-delete' property.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-button">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                        </button>
+                                    </form>
+                                </td>
+                                
                             </td>
                         </tr>
                         {% endfor %}

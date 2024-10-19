@@ -11,6 +11,7 @@ urlpatterns = [
     path('housing/create/', HousingCreateView.as_view(), name='housing_create'),
     path('housing/<int:pk>/update/', HousingUpdateView.as_view(), name='housing_update'),
 
+    path('property/delete/<int:pk>/', PropertyDeleteView.as_view(), name='property-delete'),
 
 ]
 

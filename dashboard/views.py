@@ -7,6 +7,7 @@ from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView
+from django.shortcuts import get_object_or_404
 
 class Dashboard(View):
     def get(self, request):
@@ -60,6 +61,12 @@ class PropertyView(View):
         
         return redirect('properties')
 
+
+class PropertyDeleteView(View):
+    def post(self, request, pk):
+        property = get_object_or_404(Housing, pk=pk)
+        property.delete()
+        return redirect('properties')
 
 
 class Review(View):
