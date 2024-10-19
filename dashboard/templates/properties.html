@@ -185,7 +185,7 @@
         }
     </script>
 
- <style>
+<style>
     /* Modal styling */
 .modal {
     position: fixed !important;
@@ -205,7 +205,7 @@
     padding: 30px !important;
     border-radius: 12px !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-    width: 90% !important; /* Modal width */
+    width: 65% !important;
     max-width: 1200px !important; /* Set a maximum width for larger screens */
 }
 
@@ -219,14 +219,29 @@
     width: 45% !important;
 }
 
-/* On small screens, make columns stack and fill the width */
+/* On small screens, make "Additional Images" appear last */
 @media (max-width: 600px) {
     .modal-form-grid {
-        flex-direction: column !important;
+        flex-wrap: wrap !important;
     }
 
     .modal-column {
-        width: 100% !important;
+        width: 100% !important; /* Make the columns full width */
+    }
+
+    /* Additional Images should appear last */
+    .modal-column:first-child {
+        order: 1 !important;
+    }
+
+    .modal-column:last-child {
+        order: 2 !important;
+    }
+
+    #images, 
+    #additional-images-preview, 
+    label[for="images"] {
+        order: 99 !important;
     }
 }
 
@@ -259,11 +274,11 @@ input:focus, textarea:focus {
 /* Image Preview Styles */
 .image-preview-container {
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important; /* 4 images per row on large screens */
+    grid-template-columns: repeat(4, 1fr) !important;
     gap: 10px !important;
     margin-top: 15px !important;
-    border: 1px solid #ddd !important; /* Add border around the preview container */
-    padding: 10px !important; /* Add padding inside the container */
+    border: 1px solid #ddd !important;
+    padding: 10px !important;
     border-radius: 8px !important;
     background-color: #f9f9f9 !important;
 }
@@ -271,15 +286,15 @@ input:focus, textarea:focus {
 /* Responsive: 2 images per row for medium screens */
 @media (max-width: 1024px) {
     .image-preview-container {
-        grid-template-columns: repeat(2, 1fr) !important; /* 2 images per row */
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
 
 /* Responsive: Full-width image preview container on small screens */
 @media (max-width: 600px) {
     .image-preview-container {
-        grid-template-columns: repeat(2, 1fr) !important; /* 2 images per row */
-        width: 100% !important; /* Make the container full width */
+        grid-template-columns: repeat(2, 1fr) !important;
+        width: 100% !important;
     }
 }
 
@@ -312,6 +327,6 @@ input:focus, textarea:focus {
     display: block !important;
 }
 
- </style>
+</style>
 
 {% endblock %}
