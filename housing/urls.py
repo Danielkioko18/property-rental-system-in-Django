@@ -9,7 +9,7 @@ urlpatterns = [
     # path('about/', About.as_view(), name='about'),
     # path('contact/', Contact.as_view(), name='contact'),
     path('property/', Property.as_view(), name='property'),
-    path('property-details/', PropertyDetails.as_view(), name='property-details'),
+    path('property-details/<slug:slug>/', PropertyDetails.as_view(), name='property-details'),
     path('', PropertyListing.as_view(), name='listings'),
 
 
