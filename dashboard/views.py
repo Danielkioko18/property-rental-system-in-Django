@@ -8,8 +8,6 @@ from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView
 
-
-# Create your views here.
 class Dashboard(View):
     def get(self, request):
         return render(request, 'dashboard.html')
@@ -21,31 +19,49 @@ class PropertyView(View):
         return render(request, 'properties.html', {'properties': properties})
 
     def post(self, request):
-        # Handling the form submission from the modal
+        title = request.POST.get('title')
         location = request.POST.get('location')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
         price = request.POST.get('price')
         bedrooms = request.POST.get('bedrooms')
-        square_footage = request.POST.get('square-footage')
-        amenities = request.POST.get('amenities')
-        media = request.FILES.getlist('media')
+        bathrooms = request.POST.get('bathrooms')
+        garage = request.POST.get('garage')
+        sqft = request.POST.get('sqft')
+        lot_size = request.POST.get('lot_size')
+        description = request.POST.get('description')
+        media = request.FILES.getlist('images')
+        
+        if not description:
+            return render(request, 'properties.html', {
+                'error': 'Description is required!',
+                'properties': Housing.objects.all()
+            })
 
-        # Create and save the new property
+        landlord = request.user 
         property = Housing.objects.create(
+            landlord=landlord,  
+            title=title,
             address=location,
+            city=city,
+            state=state,
             price=price,
             bedrooms=bedrooms,
-            sqft=square_footage,
-            description=amenities,
-            photo_main=media[0] if media else None,  # Handle main image, or use a placeholder
+            bathrooms=bathrooms,
+            garage=garage,
+            sqft=sqft,
+            lot_size=lot_size,
+            description=description,
+            photo_main=media[0] if media else None,  
         )
         
-        # Optionally handle additional media like videos or images
         for file in media[1:]:
             HousingImage.objects.create(housing=property, image=file)
         
-        return redirect('property-list')  # Redirect to the property list after successful submission
+        return redirect('properties')
 
-    
+
+
 class Review(View):
     def get(self, request):
         return render(request, 'reviews.html')
