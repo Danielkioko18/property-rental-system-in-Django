@@ -1,6 +1,11 @@
 from django.contrib import admin
+from .models import Housing, HousingImage
 
-# Register your models here.
-from .models import Housing
+class HousingImageInline(admin.TabularInline):
+    model = HousingImage
+    extra = 1  
 
-admin.site.register(Housing)
+class HousingAdmin(admin.ModelAdmin):
+    inlines = [HousingImageInline]
+
+admin.site.register(Housing, HousingAdmin)
