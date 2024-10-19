@@ -41,5 +41,18 @@ class PropertyListing(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Housing.objects.filter(is_published=True)
+        queryset = Housing.objects.filter(is_published=True)
+        # You can add custom filtering logic here based on the search form
+        location = self.request.GET.get('location')
+        price_range = self.request.GET.get('price-range')
+        bedrooms = self.request.GET.get('bedrooms')
+        if location:
+            queryset = queryset.filter(city__icontains=location)
+        if price_range:
+            min_price, max_price = map(int, price_range.split('-')) if '-' in price_range else (60000, None)
+            queryset = queryset.filter(price__gte=min_price, price__lte=max_price if max_price else float('inf'))
+        if bedrooms:
+            queryset = queryset.filter(bedrooms__gte=bedrooms)
+        return queryset
+
 

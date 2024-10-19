@@ -66,21 +66,21 @@
             <div class="property-listings">
                 <h2>Available Properties</h2>
                 <div class="card-container">
-                    <!-- Static property data -->
-                    {% for property in property_list %}
+                    <!-- Loop through dynamic property data -->
+                    {% for property in houses %}
                     <div class="card">
                         <div class="card-img-container">
-                            <img src="{{ property.image }}" alt="{{ property.title }}">
+                            <img src="{{ property.photo_main.url }}" alt="{{ property.title }}">
                             <div class="love-icon">
                                 <i class="fas fa-heart"></i>
                             </div>
                         </div>
                         <div class="card-content">
                             <h3>{{ property.title }}</h3>
-                            <p><i class="fas fa-map-marker-alt"></i> {{ property.location }}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> {{ property.city }}, {{ property.state }}</p>
                             <p><i class="fas fa-money-bill-wave"></i> KSH {{ property.price }} / month</p>
                             <p><i class="fas fa-bed"></i> {{ property.bedrooms }} Bedrooms</p>
-                            <a href="#">
+                            <a href="{% url 'property-details' property.slug %}">
                                 <button class="btn det">View Details</button>
                             </a>
                         </div>
@@ -88,6 +88,7 @@
                     {% endfor %}
                 </div>
             </div>
+            
         </div>
     </div>
 
