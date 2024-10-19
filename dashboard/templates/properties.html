@@ -167,10 +167,11 @@
             }
         }
 
-        // Function to preview multiple additional images (no limit)
+        // Function to preview multiple additional images
         function previewAdditionalImages(event) {
             const files = event.target.files;  // Get all selected files
             const output = document.getElementById('additional-images-preview');
+            output.innerHTML = '';  // Clear previous previews
 
             Array.from(files).forEach(file => {
                 const img = document.createElement('img');
@@ -202,7 +203,8 @@
         padding: 30px !important;
         border-radius: 12px !important;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-        width: 70% !important;
+        width: 90% !important; /* Increased modal width */
+        max-width: 1200px !important; /* Set a maximum width for larger screens */
     }
 
     .modal-form-grid {
@@ -243,24 +245,27 @@
 
     /* Image Preview Styles */
     .image-preview-container {
-        display: flex !important;
-        flex-direction: row !important; /* Display images in a row */
-        justify-content: flex-start !important;
-        align-items: center !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 images per row */
+        gap: 10px !important;
         margin-top: 15px !important;
-        gap: 10px !important; /* Add spacing between images */
         border: 1px solid #ddd !important; /* Add border around the preview container */
         padding: 10px !important; /* Add padding inside the container */
-        border-radius: 8px !important; /* Slightly rounded corners */
+        border-radius: 8px !important;
         background-color: #f9f9f9 !important;
-        max-width: 100% !important;
-        overflow-x: auto !important; /* Enable horizontal scrolling if necessary */
     }
 
-    /* Ensure responsive column layout for mobile */
-    @media (max-width: 768px) {
+    /* Responsive: 2 images per row for medium screens */
+    @media (max-width: 1024px) {
         .image-preview-container {
-            flex-direction: column !important; /* Stack images vertically on small screens */
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+
+    /* Responsive: 1 image per row for small screens (phones) */
+    @media (max-width: 600px) {
+        .image-preview-container {
+            grid-template-columns: 1fr !important;
         }
     }
 
@@ -276,8 +281,8 @@
     }
 
     .preview-image {
-        width: 150px !important;
-        height: 150px !important;
+        width: 100% !important;
+        height: 100% !important;
         object-fit: cover !important;
         display: block !important;
         border-radius: 8px !important;
