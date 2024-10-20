@@ -251,6 +251,100 @@
         cursor: pointer;
         color: #e74c3c;
     }
+
+
+    /* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    /* Stack the header vertically */
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background-color: #0662CD;
+    }
+
+    /* Arrange user info, avatar, bell icon, and logout in a single row */
+    .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .username {
+        margin: 0;
+        font-size: 16px;
+        color: white;
+    }
+
+    .prof img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .icon {
+        font-size: 24px;
+        color: white;
+    }
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+
+    /* Properly place the search bar below user-info */
+    .search-bar {
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+    .search-bar input {
+        width: calc(100% - 40px); /* Ensure the input stretches across */
+        max-width: none;
+        padding: 12px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional for a cleaner look */
+    }
+
+    /* Adjust the spacing and padding for the stats section */
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    /* Ensure property listing table is scrollable on mobile */
+    .properties-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 10px;
+    }
+
+    .property-image {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+
 </style>
 
 {% endblock %}
