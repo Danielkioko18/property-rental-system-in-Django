@@ -31,6 +31,9 @@
                     {% endif %}
                 </div>
             </div>
+                     
+                <button class="add-button" id="open-modal">Add a Property</button>
+         
             
 
             <!-- Modal for Adding Property -->
@@ -203,6 +206,16 @@
         }
     </script>
 <style>
+    .add-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 15%;
+        margin-bottom: 1%;
+    }
   
 
     /* Header styling */
@@ -357,6 +370,11 @@
     #additional-images-preview, 
     label[for="images"] {
         order: 99 !important;
+    }
+    
+    .add-button {
+        width: 100% !important;
+        margin-bottom: 2%;
     }
 }
 
