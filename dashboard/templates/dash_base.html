@@ -25,7 +25,9 @@
                 <div class="logo">
                     <a href="{% url 'listings' %}"> <img src="{% static 'img/Pystay Housing Logo white.png' %} " style="width:100px" alt=""> </a>
                 </div>
-                <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+                <!-- <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div> -->
+                <button class="new-menu-toggle" onclick="newToggleMobileMenu()">&#9776;</button>
+
             </div>
             <div class="menu" id="sidebar-menu">
                 <div class="link">
@@ -52,12 +54,116 @@
                     </div>
                 </div>
             </div>
-        </aside>       
+        </aside> 
+        
+       
+        
+            
+        
+            <!-- Mobile Sidebar (hidden on large screens) -->
+            <div class="new-mobile-sidebar" id="new-mobile-sidebar">
+                <div class="new-menu">
+                    <div class="new-link">
+                        <ion-icon name="apps-outline"></ion-icon>
+                        <a href="{% url 'dashboard' %}">Dashboard</a>
+                    </div>
+                    <div class="new-link">
+                        <ion-icon name="home-outline"></ion-icon>
+                        <a href="{% url 'properties' %}">Properties</a>
+                    </div>
+                    <div class="new-help">
+                        <div class="new-link">
+                            <ion-icon name="home-outline"></ion-icon>
+                            <a href="{% url 'listings' %}">Home</a>
+                        </div>
+                        <div class="new-link">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                            <a href="{% url 'listings' %}">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
 {% block content %}
 {% endblock %}
 
 </div>
+<script>
+    function newToggleMobileMenu() {
+        const mobileSidebar = document.getElementById('new-mobile-sidebar');
+        mobileSidebar.classList.toggle('new-active');
+    }
+</script>
+<style>
+    /* General styling for the sidebar */
+    .new-sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #0662CD;
+        position: relative;
+        left: 0;
+        z-index: 100;
+    }
 
+    /* Sidebar for mobile screens */
+    .new-mobile-sidebar {
+        display: none; /* Hidden by default */
+        width: 250px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        background-color: #0662CD;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    /* Show the mobile sidebar when it's active */
+    .new-mobile-sidebar.new-active {
+        left: 0; /* Slide in when active */
+    }
+
+    /* Toggle button for mobile */
+    .new-menu-toggle {
+        display: none; /* Hidden by default */
+        font-size: 30px;
+        background-color: #0662CD;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        position: fixed;
+        top: 15px;
+        left: 10px;
+        z-index: 1100;
+    }
+
+    /* Media query for small screens (less than 768px) */
+    @media (max-width: 768px) {
+        .new-sidebar {
+            display: none; /* Hide the default sidebar */
+        }
+
+        .new-menu-toggle {
+            display: block; /* Show the toggle button */
+        }
+
+        .new-mobile-sidebar {
+            display: block; /* Enable the mobile sidebar */
+        }
+    }
+
+    /* Hide the toggle button and mobile sidebar on larger screens */
+    @media (min-width: 768px) {
+        .new-mobile-sidebar {
+            display: none;
+        }
+
+        .new-menu-toggle {
+            display: none;
+        }
+    }
+</style>
 </body>
 </html>
 
