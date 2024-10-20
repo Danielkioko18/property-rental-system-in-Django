@@ -95,48 +95,70 @@
     }
 </script>
 <style>
-    /* General styling for the sidebar */
-    .new-sidebar {
-        width: 250px;
-        height: 100vh;
-        background-color: #0662CD;
-        position: relative;
-        left: 0;
-        z-index: 100;
-    }
+    /* General styling for the mobile sidebar */
+.new-mobile-sidebar {
+    display: none; /* Hidden by default */
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #0662CD; /* Sidebar background color */
+    z-index: 1000; /* Ensures the sidebar is on top of other elements */
+    transition: left 0.3s ease; /* Smooth slide-in effect */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Optional: adds shadow to the sidebar */
+    color: white!important; /* Text color */
+}
 
-    /* Sidebar for mobile screens */
-    .new-mobile-sidebar {
-        display: none; /* Hidden by default */
-        width: 250px;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: -250px;
-        background-color: #0662CD;
-        z-index: 1000;
-        transition: left 0.3s ease;
-    }
+/* Show the mobile sidebar when it's active */
+.new-mobile-sidebar.new-active {
+    left: 0; /* Slide the sidebar into view */
+    color: white!important; 
+}
 
-    /* Show the mobile sidebar when it's active */
-    .new-mobile-sidebar.new-active {
-        left: 0; /* Slide in when active */
-    }
+/* Menu inside the sidebar */
+.new-menu {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds space between menu items */
+    color: white!important; 
+}
 
-    /* Toggle button for mobile */
-    .new-menu-toggle {
-        display: none; /* Hidden by default */
-        font-size: 30px;
-        background-color: #0662CD;
-        color: white;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-        position: fixed;
-        top: 15px;
-        left: 10px;
-        z-index: 1100;
-    }
+/* Links inside the sidebar */
+.new-link {
+    color: white; /* Link text color */
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: padding-left 0.3s ease;
+    color: white!important; 
+}
+
+a {
+    color: white!important; 
+}
+
+/* Link icon styling */
+.new-link ion-icon {
+    margin-right: 10px; /* Space between the icon and the text */
+    font-size: 22px;
+    color: white!important; 
+}
+
+/* Hover effect for the links */
+.new-link:hover {
+    padding-left: 10px; /* Slight padding shift on hover */
+    background-color: rgba(255, 255, 255, 0.2); /* Light overlay effect */
+    border-radius: 5px; /* Optional: rounded edges on hover */
+}
+
+/* Styling for the 'help' section */
+.new-help .new-link {
+    color: #f1f1f1; /* Different color for 'Help' section links */
+}
+
 
     /* Media query for small screens (less than 768px) */
     @media (max-width: 768px) {
