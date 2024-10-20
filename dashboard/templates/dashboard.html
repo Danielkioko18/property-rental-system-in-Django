@@ -193,7 +193,6 @@
         border-radius: 5px;
     }
 
-    /* Stats section styling */
     .stats {
         display: flex;
         gap: 20px;
@@ -212,7 +211,6 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    /* Graph section styling */
     .graph-section {
         padding: 20px;
         background-color: #fff;
@@ -221,7 +219,6 @@
         margin-bottom: 20px;
     }
 
-    /* Property listings table */
     .properties-table {
         width: 100%;
         border-collapse: collapse;
@@ -252,10 +249,7 @@
         color: #e74c3c;
     }
 
-
-    /* Mobile-specific adjustments */
 @media (max-width: 768px) {
-    /* Stack the header vertically */
     .header {
         display: flex;
         flex-direction: column;
@@ -264,7 +258,6 @@
         background-color: #0662CD;
     }
 
-    /* Arrange user info, avatar, bell icon, and logout in a single row */
     .user-info {
         display: flex;
         justify-content: center;
@@ -299,7 +292,6 @@
         border-radius: 5px;
     }
 
-    /* Properly place the search bar below user-info */
     .search-bar {
         width: 100%;
         padding: 0;
@@ -308,7 +300,7 @@
     }
 
     .search-bar input {
-        width: calc(100% - 40px); /* Ensure the input stretches across */
+        width: calc(100% - 40px); 
         max-width: none;
         padding: 12px;
         border-radius: 20px;
@@ -316,17 +308,15 @@
         outline: none;
         margin-left: 10px;
         margin-right: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional for a cleaner look */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     }
 
-    /* Adjust the spacing and padding for the stats section */
     .stats {
         flex-direction: column;
         gap: 10px;
         padding: 10px 0;
     }
 
-    /* Ensure property listing table is scrollable on mobile */
     .properties-table {
         display: block;
         overflow-x: auto;
