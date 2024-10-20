@@ -16,18 +16,17 @@
                 </div>
                 <div class="user-info">
                     {% if user.is_authenticated %}
+                    <div class="icon">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                       
+                    </div>
                     <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
                     <div class="prof">
                         <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
                     </div>
                     
-                    <div class="icon">
-                        <ion-icon name="notifications-outline"></ion-icon>
-                       
-                    </div>
-                    <a href="{% url 'logout' %}">
-                        <button class="btn logout">Logout</button>
-                    </a>
+                   
+                    
                     {% endif %}
                 </div>
             </div>
@@ -549,6 +548,92 @@ input:focus, textarea:focus {
         cursor: pointer;
         color: #e74c3c;
     }
+</style>
+
+<style>
+    @media (max-width: 768px) {
+    .search {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background-color: #0662CD;
+    }
+
+    .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .username {
+        margin: 0;
+        font-size: 16px;
+        color: white;
+    }
+
+    .prof img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .icon {
+        font-size: 24px;
+        color: white;
+    }
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+
+    .search-bar {
+        width: 90%;
+        padding: 0;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+    .search-bar input {
+        width: calc(100% - 40px); 
+        max-width: none;
+        padding: 12px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .properties-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 10px;
+    }
+
+    .property-image {
+        width: 60px;
+        height: 60px;
+    }
+}
 </style>
 
 {% endblock %}

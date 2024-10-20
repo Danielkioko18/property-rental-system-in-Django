@@ -49,8 +49,11 @@
                     </div>
                     
                     <div class="link">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                        <a href="{% url 'listings' %}">Log out</a>
+                        
+                        
+                        <a href="{% url 'logout' %}">
+                            <button class="btn logout">Logout</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -93,8 +96,34 @@
         const mobileSidebar = document.getElementById('new-mobile-sidebar');
         mobileSidebar.classList.toggle('new-active');
     }
+
+    // Close sidebar when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const mobileSidebar = document.getElementById('new-mobile-sidebar');
+        const toggleButton = document.querySelector('.new-menu-toggle');
+
+        // Check if the sidebar is currently open and if the click is outside the sidebar
+        if (mobileSidebar.classList.contains('new-active') && !mobileSidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+            mobileSidebar.classList.remove('new-active');
+        }
+    });
 </script>
+
 <style>
+
+.new-menu-toggle{
+    display: block;
+    font-size: 30px; /* Increased font size */
+    background-color: #0662CD;
+    color: white;
+    padding: 15px 20px; /* Increased padding */
+    border: none;
+    cursor: pointer;
+   
+    z-index: 1100;
+    border-radius: 5px; /* Rounded corners */
+    
+}
     /* General styling for the mobile sidebar */
 .new-mobile-sidebar {
     display: none; /* Hidden by default */
@@ -158,6 +187,8 @@ a {
 .new-help .new-link {
     color: #f1f1f1; /* Different color for 'Help' section links */
 }
+
+
 
 
     /* Media query for small screens (less than 768px) */
