@@ -12,7 +12,7 @@ class UserRegisterView(CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = 'auth-page.html'
-    success_url = reverse_lazy('auth')
+    success_url = reverse_lazy('login')
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -41,4 +41,4 @@ def custom_login_view(request):
 def custom_logout_view(request):
     logout(request)  
     messages.success(request, 'You have been successfully logged out.')  
-    return redirect('auth')  
+    return redirect('login')  
