@@ -20,7 +20,7 @@
             <!-- Search Bar -->
             <aside class="search-sidebar">
                 <h2>Filter Properties</h2>
-                <form class="search-form" method="GET" action="{% url 'listings' %}">
+                <form class="search-form" method="GET" action="{% url 'listings' %}" id="filter-form">
                     <div class="form-group">
                         <label for="location">Location:</label>
                         <input type="text" id="location" name="location" placeholder="Enter city or area" value="{{ request.GET.location }}">
@@ -54,15 +54,12 @@
                             <option value="villa" {% if request.GET.property_type == "villa" %}selected{% endif %}>Villa</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn search-btn">Search</button>
                 </form>
-            </aside>
+            </aside>     
 
-            <!-- Property Listings -->
             <div class="property-listings">
                 <h2>Available Properties</h2>
                 <div class="card-container">
-                    <!-- Loop through dynamic property data -->
                     {% for property in houses %}
                     <div class="card">
                         <div class="card-img-container">
@@ -109,7 +106,27 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
     {% include 'footer.html'%}
+
+    <script>
+        document.querySelectorAll('#filter-form input, #filter-form select').forEach(function(element) {
+            element.addEventListener('change', function() {
+                document.getElementById('filter-form').submit();
+            });
+        });
+        let typingTimer;
+        const typingInterval = 500; 
+        const locationInput = document.getElementById('location');
+    
+        locationInput.addEventListener('keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                document.getElementById('filter-form').submit();
+            }, typingInterval);
+        });
+    
+        locationInput.addEventListener('keydown', function() {
+            clearTimeout(typingTimer);
+        });
+    </script>
 </body>

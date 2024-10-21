@@ -35,6 +35,7 @@ class Contact(View):
     def get(self, request):
         return render(request, 'contact.html')
 
+
 class PropertyListing(ListView):    
     model = Housing
     template_name = 'listings.html'
@@ -42,18 +43,24 @@ class PropertyListing(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Housing.objects.filter(is_published=True)
-        # Apply filters from GET parameters if provided
+        queryset = Housing.objects.filter(is_published=True)    
         location = self.request.GET.get('location')
-        price_range = self.request.GET.get('price-range')
+        price_range = self.request.GET.get('price_range')
         bedrooms = self.request.GET.get('bedrooms')
         if location:
             queryset = queryset.filter(city__icontains=location)
         if price_range:
-            min_price, max_price = map(int, price_range.split('-')) if '-' in price_range else (60000, None)
-            queryset = queryset.filter(price__gte=min_price, price__lte=max_price if max_price else float('inf'))
+            if price_range == '60000+':
+                queryset = queryset.filter(price__gte=60000)
+            else:
+                min_price, max_price = map(int, price_range.split('-'))
+                queryset = queryset.filter(price__gte=min_price, price__lte=max_price)
         if bedrooms:
-            queryset = queryset.filter(bedrooms__gte=bedrooms)
+            if bedrooms == '4+':
+                queryset = queryset.filter(bedrooms__gte=4) 
+            else:
+                queryset = queryset.filter(bedrooms=int(bedrooms))
+
         return queryset
 
 
