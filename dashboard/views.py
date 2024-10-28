@@ -170,3 +170,8 @@ class HousingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         housing = self.get_object()
         return self.request.user == housing.landlord  
     
+
+class PropertyTenantsView(View):
+    def get(self, request):
+        properties = Housing.objects.all()
+        return render(request, 'tenants.html', {'properties': properties})

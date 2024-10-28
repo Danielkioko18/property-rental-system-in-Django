@@ -13,6 +13,6 @@ urlpatterns = [
 
     path('property/delete/<int:pk>/', PropertyDeleteView.as_view(), name='property-delete'),
     path('revenue-data/', RevenueDataView.as_view(), name='revenue-data'),
-
+    path('property/tenants/', PropertyTenantsView.as_view(), name='property-tenants'),
 ]
 
