@@ -14,7 +14,7 @@
             <div class="icon">
                 <ion-icon name="notifications-outline"></ion-icon>
             </div>
-            <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
+            <p class="username">Hello, {{ user.first_name|title }} {{ user.last_name|title }}</p>
             
             <div class="prof">
                 <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px; height:40px; border-radius: 50%;">

@@ -3,6 +3,8 @@
 {% block content %}
 
     <link rel="stylesheet" href="{% static 'css/properties.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
 
     <div class="dashboard-container">
@@ -20,7 +22,7 @@
                         <ion-icon name="notifications-outline"></ion-icon>
                        
                     </div>
-                    <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
+                    <p class="username">Hello, {{ user.first_name|title }} {{ user.last_name|title }}</p>
                     <div class="prof">
                         <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
                     </div>
@@ -34,97 +36,91 @@
             <!-- Stats Cards -->
             <div class="stats">
                 <div class="panel">
-                    <h4>{{ total_properties }}</h4>
+                    <h4>{{ total_tenants }}</h4>
                     <p>Total Tenants</p>
                 </div>
                 <div class="panel">
                     <h4>{{ total_units }}</h4>
                     <p>Vacant Houses</p>
                 </div>
-                <!--<div class="panel">
-                    <h4>${{ total_revenue }}</h4>
-                    <p>Total Revenue</p>
-                </div>-->
+
+
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="add-button" id="open-modal">Add a Tenant</button>
-                    <button class="add-button" id="open-modal">House Features</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTenantModal">
+                        Add a Tenant
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newPaymentModal">New Payment</button>
+                    <a href="{% url 'payment_list' property.id %}" class="btn btn-info">Payments</a>
                 </div>
             </div>
             
-
-            <!-- Modal for Adding Property -->
-            <div class="modal hidden" id="add-modal">
-                <div class="modal-content">
-                    <span class="close-button" id="close-modal">&times;</span>
-                    <h2>Add a Tenant</h2>
-                    <form id="add-property-form" method="POST" enctype="multipart/form-data" action="{% url 'properties' %}">
-                        {% csrf_token %}
-                        
-                        <div class="modal-form-grid">
-                            <!-- Column 1 -->
-                            <div class="modal-column">
-                                <label for="title">Title:</label>
-                                <input type="text" id="title" name="title" required>
-
-                                <label for="location">Location:</label>
-                                <input type="text" id="location" name="location" required>
-
-                                <label for="city">City:</label>
-                                <input type="text" id="city" name="city" required>
-
-                                <label for="state">State:</label>
-                                <input type="text" id="state" name="state" required>
-
-                                <label for="price">Price:</label>
-                                <input type="number" id="price" name="price" required>
-
-                                <label for="bedrooms">Bedrooms:</label>
-                                <input type="number" id="bedrooms" name="bedrooms" required>
-
-                                <label for="bathrooms">Bathrooms:</label>
-                                <input type="number" id="bathrooms" name="bathrooms">
-
-
-                                 <!-- Additional Images Upload -->
-                                 <label for="images">Additional Images:</label>
-                                 <input type="file" id="images" name="images" multiple accept="image/*" onchange="previewAdditionalImages(event)">
-                                 <div id="additional-images-preview" class="image-preview-container"></div>
-                            </div>
-
-                            <!-- Column 2 -->
-                            <div class="modal-column">
-                                <label for="garage">Garage:</label>
-                                <input type="number" id="garage" name="garage">
-
-                                <label for="sqft">Square Footage:</label>
-                                <input type="number" id="sqft" name="sqft" required>
-
-                                <label for="lot_size">Lot Size:</label>
-                                <input type="text" id="lot_size" name="lot_size">
-
-                                <label for="description">Description:</label>
-                                <textarea id="description" name="description" required></textarea>
-
-                                <!-- Main Image Upload -->
-                                <label for="photo_main">Main Image:</label>
-                                <input type="file" id="photo_main" name="photo_main" accept="image/*" onchange="previewMainImage(event)">
-                                <div id="main-image-preview" class="image-preview-container">
-                                    <div class="image-box">
-                                        <img id="main-preview-img" class="preview-image hidden" alt="Main Image Preview">
-                                        <p id="no-image-text">No Image Uploaded</p>
-                                    </div>
-                                </div>
-
-                               
-                            </div>
+            <!-- Modal for Adding Tenant -->
+            <div class="modal fade" id="addTenantModal" tabindex="-1" aria-labelledby="addTenantModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addTenantModalLabel">Add a Tenant</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-
-                        <button type="submit" class="modal-submit-btn">Add Tenant</button>
-                    </form>
+                        <div class="modal-body">
+                            <form id="add-tenant-form" method="POST" action="{% url 'add_tenant' pk=property.pk %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="tenant_name">Tenant Name:</label>
+                                    <input type="text" class="form-control" id="tenant_name" name="tenant_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">Phone Number:</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="house_number">House Number:</label>
+                                    <input type="text" class="form-control" id="house_number" name="house_number" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Tenant</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            
+            <!-- Modal for New Payment -->
+            <div class="modal fade" id="newPaymentModal" tabindex="-1" aria-labelledby="newPaymentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="newPaymentModalLabel">Add Payment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="add-payment-form" method="POST" action="{% url 'add_payment'%}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="tenant_id">Select Tenant:</label>
+                                    <select class="form-control" id="tenant_id" name="tenant_id" required>
+                                        {% for tenant in tenants %}
+                                            <option value="{{ tenant.id }}">{{ tenant.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="amount">Amount:</label>
+                                    <input type="number" class="form-control" id="amount" name="amount" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Payment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Property List Table -->
             <div class="table-container">
@@ -136,8 +132,8 @@
                             <th>Phone</th>
                             <th>House No</th>
                             <th>Period</th>
-                            <th>Rent Balance</th>
-                            <th>Water Bill</th>
+                            <th>Rent</th>
+                            <th>Water</th>
                             <th>Total</th>
                             <th>Paid</th>
                             <th>Balance</th>
@@ -145,29 +141,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for property in properties %}
+                        {% for tenant in tenants %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ property.address }}</td>
-                            <td>{{ property.address }}</td>
-                            <td>{{ property.address }}</td>
-                            <td>{{ property.bedrooms }}</td>
-                            <td>${{ property.price }}</td>
-                            <td>{{ property.sqft }} sqft</td>
-                            <td>{{ property.description }}</td>
-                            <td>{{ property.description }}</td>
-                            <td>{{ property.description }}</td>
+                            <td>{{ tenant.name|title }}</td>
+                            <td>{{ tenant.phone }}</td>
+                            <td>{{ tenant.house_no }}</td>
+                            <td>{{ tenant.period }}</td>
+                            <td>${{ tenant.total_rent }}</td>
+                            <td>${{ tenant.water_bill }}</td>
+                            <td>${{ tenant.total_bill }}</td>
+                            <td>${{ tenant.paid }}</td>
+                            <td style="font-weight: bold; color: green;">${{ tenant.balance }}</td>
                             <td>
                                 <!-- <ion-icon name="eye-outline" class="view-button"></ion-icon> -->
                                 <!-- <ion-icon name="create-outline" class="edit-button"></ion-icon> -->
-                                <td>
-                                    <form action="{% url 'property-delete' property.pk %}" method="POST" style="display:inline;">
+                            
+                                    <form action="{% url 'property-tenants' property.id %}" method="POST">
                                         {% csrf_token %}
-                                        <button type="submit" class="delete-button">
+                                        <input type="hidden" name="tenant_id" value="{{ tenant.id }}">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ tenant.name }}?')">
                                             <ion-icon name="trash-outline"></ion-icon>
                                         </button>
                                     </form>
-                                </td>
                                 
                             </td>
                         </tr>
@@ -178,56 +174,29 @@
         </main>
     </div>
 
-    <!-- JavaScript for Modal and Image Previews -->
+    <!-- JavaScript to handle modal visibility -->
     <script>
-        // Open modal when "Add a Property" is clicked
-        const addButton = document.querySelector('.add-button');
+        // Select elements for the modal
+        const addButton = document.querySelector('#open-modal');
         const addModal = document.getElementById('add-modal');
         const closeModalButton = document.getElementById('close-modal');
 
+        // Show the modal when the "Add Tenant" button is clicked
         addButton.addEventListener('click', function() {
-            addModal.style.display = 'flex';
+            addModal.classList.remove('hidden');
         });
 
+        // Hide the modal when the close button is clicked
         closeModalButton.addEventListener('click', function() {
-            addModal.style.display = 'none';
+            addModal.classList.add('hidden');
         });
 
+        // Close modal if clicking outside its content area
         window.addEventListener('click', function(event) {
             if (event.target === addModal) {
-                addModal.style.display = 'none';
+                addModal.classList.add('hidden');
             }
         });
-
-        // Image Preview Function for Main Image
-        function previewMainImage(event) {
-            const file = event.target.files[0];
-            const imgPreview = document.getElementById('main-preview-img');
-            const noImageText = document.getElementById('no-image-text');
-
-            if (file) {
-                imgPreview.src = URL.createObjectURL(file);
-                imgPreview.classList.add('show');
-                noImageText.classList.add('hidden');
-            } else {
-                imgPreview.classList.remove('show');
-                noImageText.classList.remove('hidden');
-            }
-        }
-
-        // Function to preview multiple additional images
-        function previewAdditionalImages(event) {
-            const files = event.target.files;  // Get all selected files
-            const output = document.getElementById('additional-images-preview');
-            output.innerHTML = '';  // Clear previous previews
-
-            Array.from(files).forEach(file => {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.classList.add('preview-image');  // Apply styling
-                output.appendChild(img);  // Append image preview
-            });
-        }
     </script>
 <style>
     .add-button {
@@ -333,158 +302,7 @@
     }
 </style>
 
-<style>
-    /* Modal styling */
-    
-.modal {
-    position: fixed !important;
-    z-index: 1000 !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
 
-.modal-content {
-    background-color: white !important;
-    margin: 5% auto !important;
-    padding: 30px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-    width: 65% !important;
-    max-width: 1200px !important; /* Set a maximum width for larger screens */
-}
-
-.modal-form-grid {
-    display: flex !important;
-    justify-content: space-between !important;
-    gap: 20px !important;
-}
-
-.modal-column {
-    width: 45% !important;
-}
-
-/* On small screens, make "Additional Images" appear last */
-@media (max-width: 600px) {
-    .modal-content{
-        width: 90% !important;
-    }
-    .modal-form-grid {
-        flex-wrap: wrap !important;
-    }
-
-    .modal-column {
-        width: 100% !important; /* Make the columns full width */
-    }
-
-    /* Additional Images should appear last */
-    .modal-column:first-child {
-        order: 1 !important;
-    }
-
-    .modal-column:last-child {
-        order: 2 !important;
-    }
-
-    #images, 
-    #additional-images-preview, 
-    label[for="images"] {
-        order: 99 !important;
-    }
-    
-    .add-button {
-        width: 100% !important;
-        margin-bottom: 2%;
-    }
-}
-
-.modal-submit-btn {
-    margin-top: 20px !important;
-    padding: 10px 20px !important;
-    background-color: #007bff !important;
-    color: white !important;
-    border: none !important;
-    cursor: pointer !important;
-    width: 100% !important;
-}
-
-input[type="text"], input[type="number"], textarea {
-    width: 100% !important;
-    padding: 10px !important;
-    margin-bottom: 15px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 5px !important;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-    transition: all 0.2s ease !important;
-}
-
-input:focus, textarea:focus {
-    border-color: #007bff !important;
-    outline: none !important;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
-}
-
-/* Image Preview Styles */
-.image-preview-container {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 10px !important;
-    margin-top: 15px !important;
-    border: 1px solid #ddd !important;
-    padding: 10px !important;
-    border-radius: 8px !important;
-    background-color: #f9f9f9 !important;
-}
-
-/* Responsive: 2 images per row for medium screens */
-@media (max-width: 1024px) {
-    .image-preview-container {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-
-/* Responsive: Full-width image preview container on small screens */
-@media (max-width: 600px) {
-    .image-preview-container {
-        grid-template-columns: repeat(2, 1fr) !important;
-        width: 100% !important;
-    }
-}
-
-.image-box {
-    border: 2px dashed #ccc !important;
-    border-radius: 8px !important;
-    width: 150px !important;
-    height: 150px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-}
-
-.preview-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-}
-
-#no-image-text {
-    color: #888 !important;
-    font-size: 14px !important;
-}
-
-.preview-image.show {
-    display: block !important;
-}
-
-</style>
 <style>
   
 
@@ -660,5 +478,9 @@ input:focus, textarea:focus {
     }
 }
 </style>
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {% endblock %}

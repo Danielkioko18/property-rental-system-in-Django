@@ -30,7 +30,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Sum, Q
 from django.views import View
-from .models import Housing
+from .models import Housing,Tenant,Payment
 
 
 
@@ -40,6 +40,10 @@ from django.db.models import Sum, Q
 from django.views import View
 from .models import Housing
 from django.db.models.functions import TruncMonth
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib import messages
+from decimal import Decimal
 
 class DashboardView(View):
     def get(self, request):
@@ -168,10 +172,86 @@ class HousingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         housing = self.get_object()
-        return self.request.user == housing.landlord  
-    
+        return self.request.user == housing.landlord
+
 
 class PropertyTenantsView(View):
-    def get(self, request):
-        properties = Housing.objects.all()
-        return render(request, 'tenants.html', {'properties': properties})
+    def get(self, request, pk):
+        # Get the property using the primary key (pk)
+        property = get_object_or_404(Housing, pk=pk)
+
+        # Get all tenants related to this property (assuming you have a related Tenant model)
+        tenants = Tenant.objects.filter(housing=property)
+        # Get the total number of tenants for this property
+        total_tenants = tenants.count()
+
+        
+        return render(request, 'tenants.html', {'tenants':tenants, 'property': property, 'total_tenants': total_tenants})  
+    
+    def post(self, request, pk):
+        # Get tenant ID from the POST data
+        tenant_id = request.POST.get('tenant_id')
+        
+        # Get the tenant to delete, if it exists
+        tenant = get_object_or_404(Tenant, id=tenant_id, housing_id=pk)
+        
+        # Delete the tenant
+        tenant.delete()
+        
+        # Redirect back to the same page after deletion
+        return HttpResponseRedirect(reverse('property-tenants', args=[pk]))
+
+
+class AddTenantView(View):
+    def post(self, request, pk):
+        # Retrieve the housing property instance based on the primary key
+        housing = get_object_or_404(Housing, pk=pk)
+
+        # Capture data from the form in the modal
+        tenant_name = request.POST.get('tenant_name')
+        phone_number = request.POST.get('phone_number')
+        house_number = request.POST.get('house_number')
+        
+        # Create a new Tenant instance and save it
+        tenant = Tenant.objects.create(
+            name=tenant_name,
+            phone=phone_number,
+            house_no=house_number,
+            housing=housing  
+        )
+        
+        # Redirect to the tenants view for this specific property
+        return redirect('property-tenants', pk=pk)
+
+
+class AddPaymentView(View):
+    def post(self, request):
+        tenant_id = request.POST.get("tenant_id")
+        amount = float(request.POST.get("amount"))
+
+        tenant = get_object_or_404(Tenant, id=tenant_id)
+        tenant.paid += Decimal(amount)  # Update the paid field with the new amount
+        tenant.save()
+
+        # Create a new Payment entry
+        payment = Payment(
+            tenant=tenant,
+            property=tenant.housing,
+            amount=Decimal(amount)
+        )
+        payment.save()
+
+        messages.success(request, "Payment added successfully!")
+        return redirect("property-tenants", pk=tenant.housing_id)
+
+class PaymentListView(View):
+    def get(self, request, property_id):
+        # Fetch payments for the given property
+        property = get_object_or_404(Housing, id=property_id)
+        payments = Payment.objects.filter(property=property).order_by('-paid_date')
+
+        # Pass payments to the template
+        return render(request, 'payments.html', {
+            'payments': payments,
+            'property': property,
+        })

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Housing
+from .models import Housing,Tenant
 
 class HousingForm(forms.ModelForm):
     class Meta:

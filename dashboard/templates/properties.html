@@ -20,7 +20,7 @@
                         <ion-icon name="notifications-outline"></ion-icon>
                        
                     </div>
-                    <p class="username">Hello, {{ user.first_name }} {{ user.last_name }}</p>
+                    <p class="username">Hello, {{ user.first_name|title }} {{ user.last_name|title }}</p>
                     <div class="prof">
                         <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
                     </div>
@@ -124,7 +124,7 @@
                     </thead>
                     <tbody>
                         {% for property in properties %}
-                        <tr>
+                        <tr onclick="location.href='{% url 'property-tenants' property.pk %}'" style="cursor: pointer;">
                             <td>{{ forloop.counter }}</td>
                             <td><img src="{{ property.photo_main.url }}" alt="Property Image" class="property-image"></td>
                             <td>{{ property.address }}</td>

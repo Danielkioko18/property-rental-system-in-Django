@@ -1,0 +1,319 @@
+{% extends "dash_base.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/properties.css' %}">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
+
+<div class="dashboard-container">
+    <main class="main-content">
+        <div class="table-container">
+            <div class="search">
+                
+                <div class="search-bar">
+                    <form method="GET" action="{% url 'dashboard' %}">
+                        <input type="text" name="q" placeholder="Search for anything" value="{{ request.GET.q }}">
+                    </form>
+                </div>
+                <div class="user-info">
+                    {% if user.is_authenticated %}
+                    <div class="icon">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                       
+                    </div>
+                    <p class="username">Hello, {{ user.first_name|title }} {{ user.last_name|title }}</p>
+                    <div class="prof">
+                        <img src="{% static 'img/profile1.jpg' %}" alt="User Avatar" style="width:40px ;height:40px; border-radius: 50%;">
+                    </div>
+                    
+                   
+                    
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats">
+                <div class="panel">
+                    <h4>{{ total_tenants }}</h4>
+                    <p>Total Tenants</p>
+                </div>
+                <div class="panel">
+                    <h4>{{ total_units }}</h4>
+                    <p>Vacant Houses</p>
+                </div>
+
+
+            </div>
+            <!--<div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTenantModal">
+                        Add a Tenant
+                    </button>
+                    <button type="button" class="add-button" data-toggle="modal" data-target="#newPaymentModal">New Payment</button>
+                    <button type="button" class="add-button">
+                        <a href="{% url 'payment_list' property.id %}" class="add-button btn btn-info">
+                            Payments
+                        </a>    
+                    </button>
+                </div>
+            </div>-->
+
+            
+            <table class="properties-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Invoice</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>                        
+                        <td>{{ payment.tenant.name|title }}</td>
+                        <td>{{ payment.amount }}</td>
+                        <td>#00{{ payment.invoice_number|default:"N/A" }}</td>
+                        <td>{{ payment.paid_date|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <form action="" method="POST"><!---->
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"> <!--onclick="return confirm('Are you sure you want to delete this payment?')">-->
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+    <!-- JavaScript to handle modal visibility -->
+    <script>
+        // Select elements for the modal
+        const addButton = document.querySelector('#open-modal');
+        const addModal = document.getElementById('add-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        // Show the modal when the "Add Tenant" button is clicked
+        addButton.addEventListener('click', function() {
+            addModal.classList.remove('hidden');
+        });
+
+        // Hide the modal when the close button is clicked
+        closeModalButton.addEventListener('click', function() {
+            addModal.classList.add('hidden');
+        });
+
+        // Close modal if clicking outside its content area
+        window.addEventListener('click', function(event) {
+            if (event.target === addModal) {
+                addModal.classList.add('hidden');
+            }
+        });
+    </script>
+<style>
+    
+
+    /* Header styling */
+    .search {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #0662CD;
+        color: white;
+    }
+
+    .search-bar input {
+        padding: 10px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        width: 250px;
+    }
+
+    .username {
+        margin: 0;
+        font-size: 16px;
+        color: #fff;
+    }
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+    /* Property listings table */
+    .properties-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .properties-table th {
+        background-color: #0662CD;
+        color: white;
+    }
+</style>
+
+
+<style>
+  
+
+    /* Header styling */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #0662CD!important;
+        color: white;
+    }
+
+    .search-bar input {
+        padding: 10px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        width: 250px;
+    }
+
+   
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    
+    /* Property listings table */
+    .properties-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .properties-table th {
+        background-color: #0662CD;
+        color: white;
+    }
+    .delete-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #e74c3c;
+    }
+</style>
+
+<style>
+    @media (max-width: 768px) {
+    .search {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background-color: #0662CD;
+    }
+
+    .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .username {
+        margin: 0;
+        font-size: 16px;
+        color: white;
+    }
+
+    .prof img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .icon {
+        font-size: 24px;
+        color: white;
+    }
+
+    .btn.logout {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+
+    .search-bar {
+        width: 90%;
+        padding: 0;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+    .search-bar input {
+        width: calc(100% - 40px); 
+        max-width: none;
+        padding: 12px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .properties-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .properties-table th, .properties-table td {
+        padding: 10px;
+    }
+
+    .property-image {
+        width: 60px;
+        height: 60px;
+    }
+}
+</style>
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}
